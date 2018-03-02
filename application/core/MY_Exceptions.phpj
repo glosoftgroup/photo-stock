@@ -1,0 +1,48 @@
+<?php
+if( !defined('BASEPATH')) exit('No direct script access allowed');
+
+class MY_Exceptions extends CI_Exceptions
+{
+	
+    function show_error($heading, $message, $template='error_general', $status = 500)
+    {
+			///echo $message;
+			$ci = & get_instance();
+			echo $ci->load->view('welcome_message');
+    }
+
+    public function howitworks(){
+		$partials = array(	
+			'navbar' => 'partials/navbar.php',
+						
+	    'footer' => 'partials/footer.php'
+			);
+			
+		$this->data['title'] = "How it works";
+				
+		$this->loadtemplateview('works',$title=$this->data['title'],$layout='default',$partials,$theme='frontend');			      
+	  
+	}
+
+	public function loadtemplateview($build='home_v',$title='Home',$layout=False,$partials=False,$theme=False)
+	{
+		$ci = & get_instance();
+
+	    if($theme)
+	    {
+	      $ci->template->set_theme($theme); 
+	    }	
+	    if($partials)
+	    {	    
+		    foreach ($partials as $key => $value)
+		    {
+				$ci->template->set_partial($key, $value);
+		    }	    
+	    }
+	    if($layout){
+	    	$ci->template->set_layout($layout);
+	    }
+		$ci->template->title($title)	   
+		     ->build($build, $this->data); 
+	}
+}

@@ -1,0 +1,11 @@
+{
+  "root": true,
+  "parser": "babel-eslint",
+  "extends": "vue",
+  "rules": {
+    "semi": [2, "always"]
+  },
+  "globals": {
+    "screen": true
+  }
+}
