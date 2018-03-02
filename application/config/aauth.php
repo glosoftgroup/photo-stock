@@ -128,8 +128,8 @@ $config_aauth["default"] = array(
 
  'login_with_name'                => false,
 
- 'email'                          => 'watchdog@logskit.com',
- 'name'                           => 'LogsKit',
+ 'email'                          => 'info@glosoftgroup.com',
+ 'name'                           => 'Glosoft Group',
  'email_config'                   => false,
 
  'verification'                   => false,

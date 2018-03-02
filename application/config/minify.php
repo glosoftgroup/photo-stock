@@ -42,10 +42,10 @@ $config['css_dir'] = 'assets/themes/default/css';
 $config['js_dir'] = 'assets/themes/default/js';
 
 // default file name for css (default value: 'style.css')
-$config['css_file'] = 'logskit.css';
+$config['css_file'] = 'style.css';
 
 // default file name for js (default value: 'scripts.js')
-$config['js_file'] = 'logskit.js';
+$config['js_file'] = 'main.js';
 
 // use automatic file names (default value: 'FALSE')
 $config['auto_names'] = FALSE;
