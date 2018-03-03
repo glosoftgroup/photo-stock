@@ -125,6 +125,20 @@ if ( ! function_exists('login_fast_link'))
 	}
 }
 
+if(!function_exists('makedirs'))
+{
+    /* 
+     * create recursive directory 
+     * */
+    function makedirs($dirpath, $mode='0757'){
+        if(is_dir($dirpath)) return TRUE;
+        $prev_path = substr($dirpath, 0, strrpos($dirpath, '/', -2) + 1);
+        $return = makedirs($prev_path);
+        ($return && is_writable($prev_path)) ? mkdir($dirpath, $mode, TRUE) : false;
+        return is_dir($dirpath) || mkdir($dirpath, $mode, TRUE);
+    }
+}
+
 
 
 
