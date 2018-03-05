@@ -37,5 +37,21 @@
 <?=theme_js('lib/css3-animate-it.js','frontend');?>
 <?=theme_js('lib/counter.js','frontend');?>
 <?=theme_js('main.js','frontend');?>
+
+<script type="text/javascript">
+$(function(){
+
+  $(".input-group-btn .dropdown-menu li a").click(function(){
+
+    var selText = $(this).html();
+
+    //working version - for single button //
+   //$('.btn:first-child').html(selText+'<span class="caret"></span>');  
+   
+   //working version - for multiple buttons //
+   $(this).parents('.input-group-btn').find('.btn-search').html(selText);
+   });
+});
+</script>
 </body>
 </html>

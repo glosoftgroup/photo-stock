@@ -1,3 +1,7 @@
+
+<script type="text/javascript">
+  var base_url = "<?=base_url();?>";
+</script>
 <div class="content" id="vue-app">
 	<div class="row">
 		<!-- filter -->
@@ -8,7 +12,7 @@
 	            <div class="col-md-2">
 	              <label style="visibility: hidden;"> add</label>
 	              <div class="form-group">
-	                    <a id="toggle-add-form" href="{% url 'student:add' %}" class="btn btn-primary hvr-glow btn-raised legitRipple waves-effect waves-light">
+	                    <a id="toggle-add-form" href="<?=base_url('post/add');?>" class="btn btn-primary hvr-glow btn-raised legitRipple waves-effect waves-light">
 	                        <i class="icon-plus2 position-left"></i>Add
 	                    </a>
 	              </div>
@@ -56,20 +60,16 @@
    <div id="pagination-div">
       <!-- Header and footer fixed -->
       <div class="panel panel-flat" id="printme">
-        <div class="panel-body">
-            <div class="col-md-12">
-                <h5 class="text-center text-bold">Students</h5>
-            </div>
+        <div class="panel-body">            
         <div class="">
           <table class="table table-sm room-striped room-hover dataroom-header-footer" style="border-bottom:1px solid #ddd;">
                 <thead>
                   <tr class="bg-primary">
-                    <th>Photo</th>
-                    <th>Admission No.</th>
-                    <th>Name</th>
-                    <th>Gender</th>
-                    <th>Religion</th>
-                    <th></th>
+                    <th>Preview</th>
+                    <th>Title</th>
+                    <th>Date</th>
+                    <th>File info</th>
+                    <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody id="tb">
@@ -91,21 +91,28 @@
                 </template>
                 <!--listing template-->
                 <template v-for="item in items">
-                    <tr class="td animated fadeIn" :id="item.id">
+                    <tr class="td" :id="item.id">
                         <td>
                             <span v-if="item.full_path">
-                                <img :src="item.full_path" alt="Image">
+                              <a :href="base_url+item.full_path" data-popup="lightbox">
+                                <img width="120px" :src="base_url+item.full_path" alt="Image">
+                              </a>
                             </span>
                             <span v-else>
                                 <img width="50" height="50" src="{% static 'images/users/default-avatar.png' %}" alt="Image">
                             </span>
                         </td>
-                        <td>${item.adm_no}</td>
                         <td>
-                            ${item.first_name} ${item.middle_name} ${item.last_name}
+                            ${item.title} 
                         </td>
-                        <td>${item.gender}</td>
-                        <td>${item.religion}</td>
+                        
+                        <td>
+                          ${item.timestamp}
+                        </td>
+                        <td>
+                          ${item.file_size} ${item.file_size}
+                        </td>
+                        
 
                         <td class="text-center">
                             <ul class="icons-list">
@@ -195,7 +202,7 @@
 <input type="hidden" class="pageUrls"
   data-listurl="<?=base_url('post/get_list');?>"
 >
-
+<?=theme_js('plugins/media/fancybox.min.js');?>
 <?=theme_js('plugins/forms/selects/bootstrap_select.min.js');?>
 <?=theme_js('plugins/pickers/daterangepicker.js');?>
 <?=theme_js('plugins/pagination/jquery.twbsPagination.min.js');?>
@@ -205,5 +212,9 @@
 <script type="text/javascript">
   $(document).ready(function() {
     $('.bootstrap-select').selectpicker();
+     // Lightbox
+    $('[data-popup="lightbox"]').fancybox({
+        padding: 3
+    });
   });
 </script>

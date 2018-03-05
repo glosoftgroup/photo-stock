@@ -24,11 +24,30 @@ class Post extends MY_Controller {
 
 	public function get_list($num=5,$start=0)
     {
+    	$search = '';
+    	$date = '';
+    	if(isset($_GET['page_size'])){
+    		$num = $_GET['page_size'];
+    	}
+    	if(isset($_GET['q'])){
+    		$search = $_GET['q'];
+    	}
+    	if(isset($_GET['page'])){
+    		$start = $_GET['page']-1;
+    	}
+    	if(isset($_GET['date'])){
+    		$date = $_GET['date'];
+    	}
+
         accessPermisson('view dashboard');
         $data['logs']['results'] = $this->aauth_post_model->get_posts($num,
-        	$start);
+        	$start, $search, $date);
+        $data['logs']['total'] = $this->aauth_post_model-> get_posts_total($num, $start, $search, $date); //sizeof($data['logs']['results']);
         if(sizeof($data['logs']['results']) > 0){
-        	$data['logs']['total_pages'] = sizeof($data['logs']['results'])/5;
+        	$data['logs']['total_pages'] = $data['logs']['total']/$num;
+        	if($data['logs']['total_pages'] <=0){
+        		$data['logs']['total_pages'] = 1;
+        	}
         }else{
         	$data['logs']['total_pages'] = 1;
         }

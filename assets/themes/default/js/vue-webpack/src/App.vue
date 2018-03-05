@@ -61,6 +61,8 @@ export default {
       msg: 'Welcome to Your Vue.js App',
       title:'',
       body:'',
+      alert_text:'',
+      snackbar:false,
       editorOption: {
           // some quill options
       },
@@ -107,7 +109,7 @@ export default {
         .then(function(response) {
             console.log('submited');
             self.alert_text = 'Data updated successfuly';
-            self.snackbar = true;
+            self.snackbar = true;            
         })
         .catch(function(err) {
             console.log('error ocursdf');

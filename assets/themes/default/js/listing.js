@@ -8,6 +8,11 @@ var date;
 function alertUser(msg,status='bg-success',header='Well done!')
     { $.jGrowl(msg,{header: header,theme: status}); }
 
+function precisionRound(number, precision) {
+  precision = Math.pow(10, precision)
+  return Math.ceil(number * precision) / precision
+}
+
 function formatNumber(n, c, d, t){
 	var c = isNaN(c = Math.abs(c)) ? 2 : c,
 			d = d === undefined ? '.' : d,
@@ -27,6 +32,39 @@ Vue.filter('strLimiter', function (value) {
   value = value.toString()
   return value.slice(0, 55)+'...';
 })
+
+//datepicker component
+Vue.component('datepicker', {
+  props: ['options', 'value'],
+  template: '#datepicker-template',
+  mounted: function () {
+    var vm = this
+    $(this.$el)
+      // init datepicker
+      .daterangepicker({
+            singleDatePicker: true,
+            locale:{format: 'YYYY-MM-DD'},
+            showDropdowns:true,
+            autoUpdateInput:false
+        },function(chosen_date) {
+        // emit event on change.
+        console.log(chosen_date);
+        vm.$emit('input', chosen_date.format('YYYY-MM-DD'));
+        // $('.datepicker').val(chosen_date.format('YYYY-MM-DD'));
+
+    });
+  },
+  watch: {
+    value: function (value) {
+      // update value
+      $(this.$el).val(value)
+    }
+  },
+  destroyed: function () {
+    // $(this.$el).off().select2('destroy')
+  }
+});
+//./datepicker
 //vue
 var parent = new Vue({
     el:"#vue-app",
@@ -39,9 +77,12 @@ var parent = new Vue({
        visiblePages:4,
        page_size:10,
        search:'',
+       start:0,
        status:'all',
        exportType:'none',
-       date: 'Select date',
+       date: null,
+       menu: false,
+       modal: false,
        deleteUrl: false,
        deleteId:false
     },
@@ -79,7 +120,7 @@ var parent = new Vue({
                     // hide modal & remove item
                     $('#modal_delete').modal('hide');
                     // this.removeItem();
-                    console.log($('#'+self.deleteId).html());
+                    // console.log($('#'+self.deleteId).html());
                     $('#'+self.deleteId).html('').remove();
                     self.deleteUrl = false;
                     self.deleteId = false;
@@ -98,9 +139,11 @@ var parent = new Vue({
             }else{ date = this.date; }
             this.$http.get($('.pageUrls').data('listurl')+'?page_size='+self.page_size+'&q='+this.search+'&status='+this.status+'&date='+date)
                 .then(function(data){
-                    data = JSON.parse(data.bodyText);
+                    data = JSON.parse(data.body);
                     this.items = data.results;
-                    this.totalPages = data.total_pages;
+                    this.totalPages = precisionRound(parseFloat(data.total_pages),0);
+                    
+                    
                 }, function(error){
                     console.log(error.statusText);
             });
@@ -112,8 +155,10 @@ var parent = new Vue({
             }else{ date = this.date; }
             this.$http.get($('.pageUrls').data('listurl')+'?page='+num+'&page_size='+this.page_size+'&status='+this.status+'&date='+date)
                 .then(function(data){
-                    data = JSON.parse(data.bodyText);
+                    data = JSON.parse(data.body);
                     this.items = data.results;
+                    this.totalPages = precisionRound(parseFloat(data.total_pages),0);
+                    console.log(this.totalPages);
                     this.loader = false;
                 }, function(error){
                     console.log(error.statusText);
@@ -148,7 +193,7 @@ var parent = new Vue({
             var self=this ;
             /* restructure pagination */
             $('.bootpag-callback').twbsPagination({
-                totalPages: parseInt(val),
+                totalPages: val,
                 visiblePages: this.visiblePages,
                 prev: '<span aria-hidden="true">&laquo;</span>',
                 next: '<span aria-hidden="true">&raquo;</span>',
@@ -167,10 +212,9 @@ var parent = new Vue({
                 
                 data = JSON.parse(data.body);                
                 this.items = data.results;
-                this.totalPages = parseInt(data.total_pages);
-                if(this.totalPages <= 0){
-                    this.totalPages = 1
-                }
+                this.totalPages = precisionRound(parseFloat(data.total_pages),0);
+                
+                
                 console.log(this.totalPages);
                 this.pagination(this.totalPages);
                 this.loader = false;

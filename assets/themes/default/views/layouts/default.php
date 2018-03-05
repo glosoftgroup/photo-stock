@@ -29,8 +29,6 @@
 	<?=theme_js("plugins/ui/jquery-validation/jquery.validate.js");?>
 	<?=theme_js("plugins/notifications/jgrowl.min.js");?>
 	<?=theme_js('plugins/loaders/blockui.min.js');?>
-	<?=theme_js("plugins/slimscroll/jquery.slimscroll.min.js");?>
-	<?=theme_js("plugins/list/list.min.js");?>
 	<?=theme_js("plugins/ui/moment/moment.min.js");?>
 	 <?=theme_js("plugins/forms/styling/uniform.min.js");?>
 
