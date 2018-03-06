@@ -31,8 +31,8 @@
 			</div>
 			<div class="col-md-3">
 				<div class="button-header">
-					<a href="login.html" class="custom-btn login">Login</a>
-					<a href="sign-up.html" class="custom-btn">Sign Up</a>
+					<a href="<?=base_url('login');?>" class="custom-btn login">Login</a>
+					<a href="<?=base_url('register');?>" class="custom-btn">Sign Up</a>
 				</div>
 			</div>
 		</div>
@@ -69,8 +69,8 @@
 					<li><a href="contact.html">Contact Us</a></li>
 				</ul><!--menu-->
 				<div class="button-header">
-					<a href="" class="custom-btn login">Login</a>
-					<a href="#" class="custom-btn">Sign Up</a>
+					<a href="<?=base_url('login');?>" class="custom-btn login">Login</a>
+					<a href="<?=base_url('register');?>" class="custom-btn">Sign Up</a>
 				</div><!--button-header-->
 			</div><!--inside-->
 		</div><!--mobile-menu-->

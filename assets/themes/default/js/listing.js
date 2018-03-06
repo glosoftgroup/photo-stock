@@ -75,12 +75,12 @@ var parent = new Vue({
        loader:true,
        totalPages:1,
        visiblePages:4,
-       page_size:10,
+       page_size:5,
        search:'',
        start:0,
        status:'all',
        exportType:'none',
-       date: null,
+       date: '',
        menu: false,
        modal: false,
        deleteUrl: false,
@@ -91,30 +91,25 @@ var parent = new Vue({
             $('#'+id).html(text);
         },
         goTo: function(url){
-            window.location.href = url;
+            window.location.href = baseUrl+'post/add/'+url;
         },
-        deleteInstance: function(url,id){
+        deleteInstance: function(id){
             // open delete modal and set delete url
             // ___________________
             // var deleteUrl = this.deleteUrl;
             var self = this;
-            if(url){
+            if(id){
                 $('#modal_delete').modal();
-                self.deleteUrl = url;
+                // self.deleteUrl = url;
                 self.deleteId = id;
                 return;
             }
 
-            if(!self.deleteUrl){
-                $('#modal_delete').modal();
-                self.deleteUrl = url;
-                self.deleteId = id;
-                return;
-            }else{
+            if(!id){
                 axios.defaults.xsrfHeaderName = "X-CSRFToken"
                 axios.defaults.xsrfCookieName = 'csrftoken'
                 
-                axios.delete(self.deleteUrl)
+                axios.post(baseUrl+'post/destroy_instance/'+self.deleteId)
                 .then(function (response) {
                     alertUser('Data deleted successfully');
                     // hide modal & remove item

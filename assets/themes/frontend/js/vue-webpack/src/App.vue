@@ -11,7 +11,7 @@
 			                
 			                    <div class="input-group-btn">
 			                        <button type="button" style="height: 47px;" class="btn btn-search btn-default dropdown-toggle" data-toggle="dropdown">
-			                            <span class="glyphicon glyphicon-search"></span>
+			                            <!-- search icon -->
 			                            <span class="label-icon">Search</span>
 			                            <span class="caret"></span>
 			                        </button>
@@ -31,14 +31,12 @@
 			                        </ul>
 			                    </div>
 			        
-			                    <input style="height: 47px;" type="text" class="form-control">
+			                    <input v-model="search" @keyup="inputChangeEvent" style="height: 47px;" type="text" class="form-control">
 			                
 			                    <div class="input-group-btn">
-			                        <button type="button" style="height: 47px;" class="btn btn-search btn-default">
+			                        <button @click="inputChangeEvent" type="button" style="height: 47px;" class="btn btn-search btn-default">
 			                        GO
-			                        </button>
-			                         
-			                         
+			                        </button>		                         
 			                    </div>
 			                </div>  
 			            </form>   
@@ -48,26 +46,36 @@
 			</div>
 			<!-- search -->
 			<!-- results -->
-			<div class="row col-md-12">
-       
-				<!-- cards -->
-         <div	class="col-md-3 p-15" v-for="item in items">
-      
-          <card :data-image="item.full_path">
-            <h1 slot="header">Lakes</h1>
-            <p slot="content">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-          </card>          
-         
-        </div> 
+			<div class="row col-md-12">       
+				<!-- cards -->         
+        <masonry :cols="5" :gutter="30"  >
+          <div v-for="(item, index) in items" :key="index">
+            <card :data-image="item.full_path">
+              <span slot="header">{{item.title}}</span>
+              <p slot="content"></p>
+            </card> 
+          </div>
+        </masonry>
         <!-- ./cards -->
 
 			</div>
+      <div class="col-md-12 text-center row" v-show="show_loader">
+        <button @click="loadMore" class="custom-btn login load-more-btn">
+          {{loader}}
+        </button>
+      </div>
 			<!-- results -->
   </div>
 </template>
 
 <script>
 import Vue from 'vue'
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+import VueMasonry from 'vue-masonry-css'
+
+Vue.use(VueMasonry);
+Vue.use(VueAxios, axios)
 
 Vue.component('card', {
   template: `
@@ -76,7 +84,10 @@ Vue.component('card', {
       ref="card">
       <div class="card"
         :style="cardStyle">
-        <div class="card-bg" :style="[cardBgTransform, cardBgImage]"></div>
+        <div class="card-bg" :style="[cardBgTransform]">
+         <img :src="this.dataImage" alt='Photo-stock'>
+         
+        </div>
         <div class="card-info">
           <slot name="header"></slot>
           <slot name="content"></slot>
@@ -85,6 +96,7 @@ Vue.component('card', {
     </div>`,
   mounted() {
     this.width = this.$refs.card.offsetWidth;
+    console.log(this.width)
     this.height = this.$refs.card.offsetHeight;
   },
   props: ['dataImage'],
@@ -143,24 +155,70 @@ export default {
   name: 'app',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App',
-      items:[
-        {full_path:"https://images.unsplash.com/photo-1479660656269-197ebb83b540?dpr=2&auto=compress,format&fit=crop&w=1199&h=798&q=80&cs=tinysrgb&crop="},
-        {full_path:"https://images.unsplash.com/photo-1479660656269-197ebb83b540?dpr=2&auto=compress,format&fit=crop&w=1199&h=798&q=80&cs=tinysrgb&crop="},
-        {full_path:"https://images.unsplash.com/photo-1479660656269-197ebb83b540?dpr=2&auto=compress,format&fit=crop&w=1199&h=798&q=80&cs=tinysrgb&crop="},
-        {full_path:"https://images.unsplash.com/photo-1479660656269-197ebb83b540?dpr=2&auto=compress,format&fit=crop&w=1199&h=798&q=80&cs=tinysrgb&crop="},
-        {full_path:"https://images.unsplash.com/photo-1479660656269-197ebb83b540?dpr=2&auto=compress,format&fit=crop&w=1199&h=798&q=80&cs=tinysrgb&crop="},
-        {full_path:"https://images.unsplash.com/photo-1479660656269-197ebb83b540?dpr=2&auto=compress,format&fit=crop&w=1199&h=798&q=80&cs=tinysrgb&crop="},
-        {full_path:"https://images.unsplash.com/photo-1479660656269-197ebb83b540?dpr=2&auto=compress,format&fit=crop&w=1199&h=798&q=80&cs=tinysrgb&crop="},
-        {full_path:"https://images.unsplash.com/photo-1479660656269-197ebb83b540?dpr=2&auto=compress,format&fit=crop&w=1199&h=798&q=80&cs=tinysrgb&crop="},
-        {full_path:"https://images.unsplash.com/photo-1479660656269-197ebb83b540?dpr=2&auto=compress,format&fit=crop&w=1199&h=798&q=80&cs=tinysrgb&crop="},
-        {full_path:"https://images.unsplash.com/photo-1479660656269-197ebb83b540?dpr=2&auto=compress,format&fit=crop&w=1199&h=798&q=80&cs=tinysrgb&crop="},
-        {full_path:"https://images.unsplash.com/photo-1479660656269-197ebb83b540?dpr=2&auto=compress,format&fit=crop&w=1199&h=798&q=80&cs=tinysrgb&crop="},
-        {full_path:"https://images.unsplash.com/photo-1479660656269-197ebb83b540?dpr=2&auto=compress,format&fit=crop&w=1199&h=798&q=80&cs=tinysrgb&crop="},
-        {full_path:"https://images.unsplash.com/photo-1479660656269-197ebb83b540?dpr=2&auto=compress,format&fit=crop&w=1199&h=798&q=80&cs=tinysrgb&crop="},
-        {full_path:"https://images.unsplash.com/photo-1479660656269-197ebb83b540?dpr=2&auto=compress,format&fit=crop&w=1199&h=798&q=80&cs=tinysrgb&crop="}
-         ]
+      msg: 'Welcome to Photo-stock App',
+      search:'',
+      status:'',
+      page_size:20,
+      start:0,
+      num:20,
+      loader:'Load more..',
+      show_loader:true,
+      items:[]
     }
+  },
+  methods:{
+    fetchPosts(){
+      var self = this;
+      this.axios.get(baseUrl+'post/get_list/20')
+        .then(function(data) {            
+            data = data.data;
+            self.items = data.results;
+            console.log('submited');                       
+        })
+        .catch(function(err) {
+            console.log('error ocursdf');
+            console.log(err);
+        });
+    },
+    inputChangeEvent:function(){
+        /* make api request on events filter */
+        var self = this;
+        
+        this.$http.get(baseUrl+'post/get_list/'+'?page_size='+self.page_size+'&q='+this.search+'&status='+this.status)
+            .then(function(data){
+                data = data.data;
+                self.items = data.results;
+                // this.totalPages = precisionRound(parseFloat(data.total_pages),0);                
+                
+            }, function(error){
+                console.log(error.statusText);
+        });
+    },
+    loadMore(){
+      var self = this;
+      this.loader = 'Loading ....'
+      this.$http.get(baseUrl+'post/load_more/'+this.num+'/'+this.start+'/')
+            .then(function(data){
+                data = data.data.results;
+                if(data.length <=0){
+                  self.show_loader = false;                  
+                }
+                self.loader = 'Load More'
+                self.items.push({
+                              full_path: data[i].full_path,
+                              title:data[i].title,
+                              body:data[i].body,
+                              timestamp:moment(data[i].timestamp).format('YYYY-MM-DD'),                             
+                              id:data[i].id
+                              });
+               }, function(error){
+                console.log(error.statusText);
+        });
+      this.start += this.num;
+    }
+  },
+  mounted: function(){
+    this.fetchPosts();
   }
 }
 </script>
@@ -173,10 +231,12 @@ $returnEasing: cubic-bezier(0.445, 0.05, 0.55, 0.95);
 
 .title {
   font-family: "Raleway";
-  font-size: 24px;
-  font-weight: 700;
-  color: #5D4037;
-  text-align: center;
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 22px;
+  text-align: left;
+  word-spacing: 1px;
 }
 
 p {
@@ -215,7 +275,10 @@ h1+p, p+p {
         opacity 5s $hoverEasing;
       opacity: 0.8;
     }
-    .card {
+    .img {
+      -ms-transform: scale(1.1);
+      transform:
+        scale(1.1);
       transition:
         0.6s $hoverEasing,
         box-shadow 2s $hoverEasing;
@@ -232,25 +295,23 @@ h1+p, p+p {
 .card {
   position: relative;
   flex: 0 0 332px;
-  width: 332px;
-  height: 221px;
-  background-color: #333;
+  // width: 332px;
+  height: 240px;
+  // background-color: #333;
   overflow: hidden;
-  border-radius: 10px;
-  box-shadow:
-    rgba(black, 0.66) 0 30px 60px 0,
-    inset #333 0 0 0 5px,
-    inset rgba(white, 0.5) 0 0 0 6px;
-  transition: 1s $returnEasing;
+  
 }
-
+.card img{
+  // box-shadow: 0 30px 10px 0 rgba(0,0,0,.66),inset 0 0 0 5px #333,inset 0 0 0 6px hsla(0,0%,100%,.5);
+  transition: 1s cubic-bezier(.445,.05,.55,.95);
+}
 .card-bg {
-  opacity: 0.5;
+  // opacity: 0.5;
   position: absolute;
-  top: -20px; left: -20px;
+  //top: -20px; left: -20px;
   width: 100%;
   height: 100%;
-  padding: 20px;
+  //margin: 20px;
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;

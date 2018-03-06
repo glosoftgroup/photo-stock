@@ -17,6 +17,7 @@ class Post extends MY_Controller {
 	{
 		
 		if(!$this->aauth->is_loggedin()){ redirect('login'); exit; }
+		unset($_SESSION['post_id']);
 		$data['title'] = ' Posts';		
 		$this->template->title($data['title'])        
 		         ->build('list', $data);
@@ -35,11 +36,14 @@ class Post extends MY_Controller {
     	if(isset($_GET['page'])){
     		$start = $_GET['page']-1;
     	}
-    	if(isset($_GET['date'])){
+    	if(isset($_GET['date'])){    		
     		$date = $_GET['date'];
+    		if($date== 'null'){
+    			$date = False;
+    		}
     	}
 
-        accessPermisson('view dashboard');
+        // accessPermisson('view dashboard');
         $data['logs']['results'] = $this->aauth_post_model->get_posts($num,
         	$start, $search, $date);
         $data['logs']['total'] = $this->aauth_post_model-> get_posts_total($num, $start, $search, $date); //sizeof($data['logs']['results']);
@@ -55,22 +59,58 @@ class Post extends MY_Controller {
         echo json_encode($data['logs']);
     }
 
-	public function add()
+    public function load_more($num=5,$start=0)
+    {
+    	$search = '';
+    	if(isset($_GET['q'])){
+    		$search = $_GET['q'];
+    	}
+        // accessPermisson('view dashboard');
+        $data['logs']['results'] = $this->aauth_post_model->get_posts($num,$start, $search);
+        echo json_encode($data['logs']);
+    }
+
+    // get cubrid_is_instance(conn_identifier, oid)
+    public function get($edit=FALSE){
+    	accessPermisson('view dashboard');
+    	if($edit){
+    		$row = $this->aauth_post_model->get($edit);
+    		$data['results'] = $row;
+    		echo json_encode($data);
+    	}else{
+    		echo json_encode(array('message'=>'Post id required'));
+    	}
+    }
+
+    // delete cubrid_is_instance(conn_identifier, oid)
+    public function destroy_instance($edit=FALSE){
+    	accessPermisson('view dashboard');
+    	if($edit){
+    		$delete_id = $this->aauth_post_model->delete($edit);
+    		echo json_encode(array('message'=>$delete_id));
+    	}else{
+    		echo json_encode(array('message'=>'Post id required'));
+    	}
+    }
+
+	public function add($edit=FALSE)
 	{
 		
 		if(!$this->aauth->is_loggedin()){ redirect('login'); exit; }
-
+		if($edit){
+			set_sessionData('post_id',$edit);
+			$data['pk'] = $edit;
+		}
 		$this->load->library('form_validation');
 		$this->form_validation->set_rules('title', 'Title', 'required');
 		$this->form_validation->set_rules('body', 'Body', 'required');
 		if ($this->form_validation->run() == FALSE)
         {
-        	$data['title'] = 'Add Post';
-            
+        	$data['title'] = 'Post Details';            
         }
         else
         {
-        	$data['title'] = 'Add Post';
+        	$data['title'] = 'Post Details';
 
         	$details = array(
             	'title'=> $this->input->post('title'),
@@ -88,11 +128,12 @@ class Post extends MY_Controller {
 	        	set_sessionData('post_id',$insert_id);
 	        }   
         }
+
         $this->template->title($data['title'])        
 			         ->build('add', $data);
 		
 	}
-	
+		
 	// create upload directory
     public function set_upload_path($dirpath) {
         $dirpath = APPPATH . '../uploads/';
@@ -105,7 +146,7 @@ class Post extends MY_Controller {
         return $dirpath;
 	}   
 
-	public function upload_file()
+	public function upload_file($edit=FALSE)
 	{
 	    $status = "";
 	    $msg = "";
@@ -115,7 +156,7 @@ class Post extends MY_Controller {
 	    {
 	        $config['upload_path'] = $upload_path;
 	        $config['allowed_types'] = 'gif|jpg|png|doc|txt|pdf|jpeg|xls|docx|xlsx';
-	        $config['max_size'] = 1024 * 8;
+	        $config['max_size'] = 15024 * 8;
 	        $config['encrypt_name'] = FALSE;
 	 		$file_id = 0;
 	        $this->load->library('upload', $config);
@@ -134,8 +175,13 @@ class Post extends MY_Controller {
 	            	'file_name'=> $data['file_name'], 
 	            	'file_type'=>  $data['file_type'],
 	            	'file_size' => $data['file_size'],
-	            	'full_path' => $full_path
+	            	'full_path' => $full_path,
+	            	'server_path' => $data['full_path']
 	            );
+
+	            if($edit){
+					set_sessionData('post_id',$edit);
+				}
 
 	            if(isset($_SESSION['post_id'])){
 	            	$row = $this->aauth_post_model->get($_SESSION['post_id']);
@@ -166,10 +212,9 @@ class Post extends MY_Controller {
 	            // unlink($data['full_path']);
 	        }
 	    }
-	    echo $msg;
-	    echo $status;
 	    //echo json_encode(array('status'=>$status, 'msg'=>$msg, 'attachid' => $file_id, 'id' => '1', 'name' => $data['file_name'], 'type'=> $data['file_type'], 'size' => $size));
 	}
+
 
         
 		

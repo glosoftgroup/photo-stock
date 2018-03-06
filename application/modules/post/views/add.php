@@ -1,22 +1,26 @@
-
-
 <div class="content" id="vue-app">
-	<div class="row">
-		<!-- post form -->		
-		
-		<!--  -->
+	<div class="row">		
 		<div class="col-md-12">
 			<div class="panel">
 			  <div class="panel-body">
-				<!-- image -->
+				<!-- post form -->
 				  <div class="col-md-12" id="app"></div>		         
-		        <!-- ./image -->
+		        <!-- ./end -->
 		      </div>
 			</div>
-		</div>	
-	
+		</div>		
 	</div>
 </div>
+<script type="text/javascript">
+	var pk = false;
+	var uploadUrl = baseUrl+'/post/upload_file';
+</script>
+<?php if($pk){ ?>
+<script type="text/javascript">
+	var pk = "<?=$pk;?>";
+	uploadUrl = baseUrl+'/post/upload_file/'+pk+'/';
+</script>
+<?php } ?>
 <?=theme_js('vue-webpack/dist/build.js');?>
 
 

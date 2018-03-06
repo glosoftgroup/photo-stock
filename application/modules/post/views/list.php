@@ -121,8 +121,8 @@
                                         Actions<span class="caret"></span></button>
 
                                     <ul class="dropdown-menu-xs dropdown-menu">
-                                        <li><a @click="goTo(item.update_url)" href="javascript:;"><i class="icon-pencil"></i> Edit</a></li>
-                                        <li><a @click="deleteInstance(item.delete_url,item.id)" href="javascript:;"><i class=" icon-trash-alt"></i> Delete</a></li>
+                                        <li><a @click="goTo(item.id)" href="javascript:;"><i class="icon-pencil"></i> Edit</a></li>
+                                        <li><a @click="deleteInstance(item.id)" href="javascript:;"><i class=" icon-trash-alt"></i> Delete</a></li>
                                     </ul>
                                 </li>
                             </ul>
@@ -192,7 +192,7 @@
 
                 <div class="modal-footer text-center">
                     <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
-                    <button @click="deleteInstance(false,false)" type="button" class="btn btn-danger animated shake">Delete</button>
+                    <button @click="deleteInstance(false)" type="button" class="btn btn-danger animated shake">Delete</button>
                 </div>
             </div>
         </div>
@@ -207,6 +207,7 @@
 <?=theme_js('plugins/pickers/daterangepicker.js');?>
 <?=theme_js('plugins/pagination/jquery.twbsPagination.min.js');?>
 <?=theme_js('plugins/vue/vue.min.js');?>
+<?=theme_js('plugins/vue/axios.min.js');?>
 <?=theme_js('plugins/vue/vue-resource.common.js');?>
 <?=theme_js('listing.js');?>
 <script type="text/javascript">

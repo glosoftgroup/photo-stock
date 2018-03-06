@@ -30,5 +30,6 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 /tests/tests/
 /tests/results/
 /node
+uploads/*
 /assets/themes/default/js/vue-webpack/node_modules/
 /assets/themes/frontend/js/vue-webpack/node_modules/
