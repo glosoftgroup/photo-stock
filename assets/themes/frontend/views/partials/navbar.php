@@ -1,4 +1,6 @@
-<header class="transparent">
+
+
+<header class="<?=$this->template->custom_css;?>">
 	<div class="container">
 		<div class="row">
 			<div class="col-md-2">
@@ -9,7 +11,7 @@
 					<li><a href="index.html">Home</a></li>
 					<li><a href="about.html">About Us</a></li>
 					<li class="children">
-						<a href="#">Hosting</a>
+						<a href="#">Images</a>
 						<ul class="sub-menu">
 							<li><a href="service-page.html">Service page 1</a></li>
 							<li><a href="service-page-light.html">Service page 2</a></li>
@@ -18,7 +20,7 @@
 						</ul><!--sub-menu-->
 					</li><!--children-->
 					<li class="children">
-						<a href="user-interface.html">Pages</a>
+						<a href="user-interface.html">Vectors</a>
 						<ul class="sub-menu">
 							<li><a href="404.html">404 Page</a></li>
 							<li><a href="order.html">Order</a></li>
@@ -31,8 +33,15 @@
 			</div>
 			<div class="col-md-3">
 				<div class="button-header">
+				<?php if($this->aauth->is_loggedin()){ ?>
+					<a href="<?=base_url('admin');?>" class="custom-btn login">Account</a>
+					<a href="<?=base_url('login/logout');?>" class="custom-btn">Logout</a>
+					
+				<?php }else{ ?>
 					<a href="<?=base_url('login');?>" class="custom-btn login">Login</a>
 					<a href="<?=base_url('register');?>" class="custom-btn">Sign Up</a>
+					
+				<?php } ?>
 				</div>
 			</div>
 		</div>
@@ -58,7 +67,7 @@
 						</ul><!--sub-menu-->
 					</li>
 					<li class="children panel">
-						<a href="#menu2" class="collapsed" data-toggle="collapse" data-parent="#accordion" aria-expanded="false" aria-controls="menu2">Pages</a>
+						<a href="#menu2" class="collapsed" data-toggle="collapse" data-parent="#accordion" aria-expanded="false" aria-controls="menu2">Vectors</a>
 						<ul class="sub-menu panel-collapse collapse" id="menu2">
 							<li><a href="404.html">404 Page</a></li>
 							<li><a href="order.html">Order</a></li>
@@ -69,8 +78,15 @@
 					<li><a href="contact.html">Contact Us</a></li>
 				</ul><!--menu-->
 				<div class="button-header">
-					<a href="<?=base_url('login');?>" class="custom-btn login">Login</a>
-					<a href="<?=base_url('register');?>" class="custom-btn">Sign Up</a>
+
+					<?php if($this->aauth->is_loggedin()){ ?>
+						<a href="<?=base_url('admin');?>" class="custom-btn login">Dashboard</a>
+						<a href="<?=base_url('login/logout');?>" class="custom-btn">Logout</a>
+					<?php }else{ ?>
+						<a href="<?=base_url('login');?>" class="custom-btn login">Login</a>
+						<a href="<?=base_url('register');?>" class="custom-btn">Sign Up</a>
+						
+					<?php } ?>
 				</div><!--button-header-->
 			</div><!--inside-->
 		</div><!--mobile-menu-->

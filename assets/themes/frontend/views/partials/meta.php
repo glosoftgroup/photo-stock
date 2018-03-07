@@ -9,5 +9,6 @@
 <?=theme_css('lib/animations.min.css','frontend');?>
 <!-- Style Theme -->
 <?=theme_css('style.css','frontend');?>
+
 <!-- Responsive Theme -->
 <?=theme_css('responsive.css','frontend');?>

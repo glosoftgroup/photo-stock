@@ -12,9 +12,10 @@ class Post extends MY_Controller {
 		parent::__construct(); 
 		$this->load->model('aauth_post_model');            
 	}
+
 	
-	public function index()
-	{
+	public function index($slug=FALSE)
+	{		
 		
 		if(!$this->aauth->is_loggedin()){ redirect('login'); exit; }
 		unset($_SESSION['post_id']);
@@ -178,6 +179,35 @@ class Post extends MY_Controller {
 	            	'full_path' => $full_path,
 	            	'server_path' => $data['full_path']
 	            );
+
+	            //print_r($data);
+	            $file_path = $data['file_path'];
+	            // echo $file_path;
+	            //$thumb = $file_path .'_thumb';
+
+	            $thumb = thumb($data['full_path'], 500, 280);
+	            echo $thumb;
+	            $thumb = $file_path .$thumb;
+	            //echo $data['full_path'];
+
+	            // add water mark
+	            $config['image_library'] = 'GD2';
+	            $config['source_image'] = $thumb;//'/path/to/image/mypic.jpg';
+				//$config['wm_text'] = 'Copyright 2006 - John Doe';
+				$config['wm_type'] = 'overlay';
+				$config['wm_overlay_path'] = 'assets/ibm.png';
+				$config['wm_vrt_alignment'] = 'middle'; 
+		        $config['wm_hor_alignment'] = 'center';
+		        $config['wm_hor_offset'] = '10';
+		        $config['wm_vrt_offset'] = '10';
+				//echo $config['wm_overlay_path'] = APPPATH. '../assets/ibm.png';
+
+				$this->image_lib->initialize($config);
+
+				// $this->image_lib->watermark();
+				if(!$this->image_lib->watermark()){
+			    	echo $this->image_lib->display_errors();
+			    }
 
 	            if($edit){
 					set_sessionData('post_id',$edit);

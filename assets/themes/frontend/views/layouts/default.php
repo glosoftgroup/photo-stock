@@ -1,83 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">	
 	<?php if(!isset($template['title'])){$title=siteinfo('name');}else{ $title = $template['title'];}?>
   <title><?=$title.' - '.siteinfo('name')?></title>
-	<?= $template['partials']['meta']; ?> 
 	<script>var baseUrl = "<?=base_url();?>";</script>
 
+	<!-- meta -->
+	<?php echo $template['partials']['meta']; ?>
+	
+	<!-- ./meta -->
 </head>
 
-<body>
-<!-- Hero -->
-<div class="section section-hero bg-indigo-800" data-stellar-background-ratio="0">
-	
-	<!-- Second navbar -->
+<body class="my-account">
+<div class="wrapper">
+	<!--===================== Header ========================-->
 	<?php echo $template['partials']['navbar']; ?> 
-	<!-- /second navbar -->
-	<?php echo $template['partials']['slider']; ?> 
-
-</div>
+	<!--===================== End of Header ========================-->
+	<!--===================== Base Slider ========================-->
+		<!--===================== End of Base Slider ========================-->
 	
+	<!-- body -->
+	<?php echo $template['body']; ?>
+	<!-- ./body -->
 
+	<!--===================== Footer ========================-->
+	<?php echo $template['partials']['footer']; ?>
+	<!--===================== End of Footer ========================-->
+</div><!--wrapper-->
+<?=theme_js('lib/jquery.js','frontend');?>
+<?=theme_js('lib/bootstrap.min.js','frontend');?>
+<?=theme_js('lib/owl.carousel.min.js','frontend');?>
+<?=theme_js('lib/css3-animate-it.js','frontend');?>
+<?=theme_js('lib/counter.js','frontend');?>
+<?=theme_js('main.js','frontend');?>
 
-	<!-- Page container -->
-	<div class="page-container">
+<script type="text/javascript">
+$(function(){
 
-		<!-- Page content -->
-		<div class="page-content">
+  $(".input-group-btn .dropdown-menu li a").click(function(){
 
-			<!-- Main content -->
-			<div class="content-wrapper">			
-        
+    var selText = $(this).html();
 
-				<!-- screenshots -->
-				<?php echo $template['partials']['body']; ?> 
-				<!-- /screenshots -->
-
-
-				<!-- Support -->
-				 <!-- echo $template['partials']['support']; ?> -->
-				<!-- /support -->
-
-
-				<!-- services Why <?=siteinfo('name');?>? -->
-				<!-- echo $template['partials']['services']; ?> -->
-				<!--  /services/why <?=siteinfo('name');?>? -->
-
-
-				<!-- Purchase and footer -->
-				<div class="section bg-slate-800 has-footer" data-stellar-background-ratio="0">
-					<!-- purchase -->
-					<?php echo $template['partials']['purchase']; ?>
-					
-					<!-- /purchase -->
-					<!-- footer -->
-					<?php echo $template['partials']['footer']; ?>
-					<!-- /footer -->
-					
-				</div>
-				<!-- /purchase and footer -->
-
-			</div>
-			<!-- /main content -->
-
-		</div>
-		<!-- /page content -->
-
-	</div>
-	<!-- /page container -->
-
-</body>
-<?=theme_js("site.js",'frontend');?>
-<?=theme_js("text_slider.js",'frontend');?>
-  <script>
- 
-	window.sr = ScrollReveal();
-	sr.reveal('.animatedParent',{reset: true, duration:1200});
-	sr.reveal('.bar');
+    //working version - for single button //
+   //$('.btn:first-child').html(selText+'<span class="caret"></span>');  
+   
+   //working version - for multiple buttons //
+   $(this).parents('.input-group-btn').find('.btn-search').html(selText);
+   });
+});
 </script>
+</body>
 </html>

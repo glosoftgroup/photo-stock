@@ -15,7 +15,7 @@
 	var pk = false;
 	var uploadUrl = baseUrl+'/post/upload_file';
 </script>
-<?php if($pk){ ?>
+<?php if(isset($pk)){ ?>
 <script type="text/javascript">
 	var pk = "<?=$pk;?>";
 	uploadUrl = baseUrl+'/post/upload_file/'+pk+'/';

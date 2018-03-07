@@ -2487,7 +2487,7 @@ footer {
 /* 04. Account Details
    ==================================== */
 .account-details {
-  width: 635px;
+  /*width: 635px;*/
   float: right;
 }
 .account-details h2 {
@@ -2620,7 +2620,7 @@ footer {
   color: #dd4e69;
 }
 .account-details .bottom {
-  margin-bottom: 195px;
+  /*margin-bottom: 195px;*/
 }
 .account-details .bottom h3 {
   color: #39335b;

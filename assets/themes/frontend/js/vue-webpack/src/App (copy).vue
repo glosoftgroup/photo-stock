@@ -46,19 +46,16 @@
 			</div>
 			<!-- search -->
 			<!-- results -->
-			<div class="row col-md-12">       
+			<div class="row col-md-12 ">       
 				<!-- cards -->  
-        <div class="our-team animatedParent">
+        <div class="our-team animatedParent">       
         <ul>
-        <masonry :cols="5" :gutter="30"  >          
-         
           <li class="animated bounceInUp delay-250 go" v-for="(item, index) in items" :key="index">
             <card :data-image="item.full_path">
-              <span slot="header"></span>
-              <p slot="content">{{item.title}}</p>
+              <span slot="header">{{item.title}}</span>
+              <p slot="content"></p>
             </card> 
-          </li>                    
-        </masonry>
+          </li>
         </ul>
         </div>
         <!-- ./cards -->
@@ -84,18 +81,14 @@ Vue.use(VueAxios, axios)
 
 Vue.component('card', {
   template: `
-    <span class="card-wrap" ref="card">
-      <span class="card" :style="cardStyle">
-       
-         <img :src="this.dataImage" alt='Photo-stock'>
-         
-      
-        <div class="card-info">
-          <slot name="header"></slot>
-          <slot name="content"></slot>
-        </div>
-      </span>
-    </span>`,
+      <span>
+        <img :src="this.dataImage" alt='Photo-stock'>
+        <div class="inside">      
+            <slot name="header"></slot>
+            <slot name="content"></slot>       
+        </div> 
+      </span>   
+   `,
   mounted() {
     this.width = this.$refs.card.offsetWidth;
     console.log(this.width)
@@ -298,7 +291,7 @@ h1+p, p+p {
   position: relative;
   flex: 0 0 332px;
   // width: 332px;
-  height: 180px;
+  height: 240px;
   // background-color: #333;
   overflow: hidden;
   

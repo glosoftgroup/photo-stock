@@ -10,7 +10,8 @@
 	<script>var baseUrl = "<?=base_url();?>";</script>
 
 	<!-- meta -->
-	<?php echo $template['partials']['meta']; ?> 
+	<?php echo $template['partials']['meta']; ?>
+	
 	<!-- ./meta -->
 </head>
 

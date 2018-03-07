@@ -10,7 +10,7 @@ class Home extends MY_Controller
 
 	public function index()
 	{
-
+		$this->data['custom_css'] = 'transparent';
 		$partials = array(	
 			'navbar' => 'partials/navbar.php',
 			'meta' => 'partials/meta.php',
@@ -18,56 +18,7 @@ class Home extends MY_Controller
 	    	'footer' => 'partials/footer.php'
 			);			
 		
-		$this->loadtemplateview('home_v',$title='Home',$layout='home',$partials,$theme='frontend');			      
-	    	 	
-	}
-
-	public function download()
-	{
-		$partials = array(	
-			'navbar' => 'partials/navbar.php',
-			'meta' => 'partials/meta.php',
-			'slider' => 'partials/widgets/work_slider.php',
-			'screenshots' => 'partials/widgets/screenshots.php',
-			'share' => 'partials/widgets/share.php',
-			'support' => 'partials/widgets/support.php',
-			'services' => 'partials/widgets/services.php',
-			'purchase' => 'partials/widgets/purchase.php',
-			'body' => 'partials/widgets/screenshots.php',
-			'mobile' => 'partials/menu.php',			
-	    	'footer' => 'partials/footer.php'
-		);
-					
-		$this->data['title'] = 'GET IT NOW';
-		$this->loadtemplateview('download',$title=$this->data['title'],$layout='default',$partials,$theme='frontend');			      
-	    	 	
-	}
-
-
-	public function price()
-	{
-		$partials = array(	
-			'navbar' => 'partials/navbar.php',
-			'meta' => 'partials/meta.php',
-			'slider' => 'partials/widgets/work_slider.php',
-			'screenshots' => 'partials/widgets/screenshots.php',
-			'support' => 'partials/widgets/support.php',
-			'services' => 'partials/widgets/services.php',
-			'purchase' => 'partials/widgets/purchase.php',
-			'body' => 'partials/widgets/pricing_table.php',
-			'mobile' => 'partials/menu.php',			
-	        'footer' => 'partials/footer.php'
-			);
-					
-		$this->data['basic'] = (array)$this->aauth_package_model->get_by('name', 'Basic');
-		$this->data['professional'] = (array)$this->aauth_package_model->get_by('name', 'Professional');
-		$this->data['enterprise'] = (array)$this->aauth_package_model->get_by('name', 'Enterprise');
-		$this->data['plus'] = (array)$this->aauth_package_model->get_by('name', 'Plus');
-		
-		$this->data['modules'] = package_modules();
-		$this->data['title'] = 'Pricing';
-		
-		$this->loadtemplateview('pricing',$title=$this->data['title'],$layout='default',$partials,$theme='frontend');			      
+		$this->loadtemplateview('home_v', $title='Home', $layout='home', $partials, $theme='frontend');			      
 	    	 	
 	}
 

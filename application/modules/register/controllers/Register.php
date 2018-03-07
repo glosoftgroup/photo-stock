@@ -109,6 +109,36 @@ class Register extends MY_Controller {
         }
     }
 
+    public function email_exist_pro() {
+        if (!filter_var($_POST['user_email'], FILTER_VALIDATE_EMAIL)) {
+            echo "<font color='red'> Enter a valid email</font>";
+            echo "<script> $('#user_email').val('');</script>";
+            $response = array(
+                 'data'=> "Enter a valid email"
+            );
+            header('HTTP/1.1 500 Internal Server Error');
+            header('Content-Type: application/json; charset=UTF-8');
+            echo json_encode($response);
+        } elseif ($this->aauth->user_exist_by_email($_POST['user_email'])) {
+            $response = array(
+                 'data'=> $_POST['user_email'] . " exist"
+            );
+            header('HTTP/1.1 500 Internal Server Error');
+            header('Content-Type: application/json; charset=UTF-8');
+            echo json_encode($response);
+            
+        } elseif ($_POST['user_email'] == '') {
+            $response = array(
+                 'data'=> "Email address is required."
+            );
+            header('HTTP/1.1 500 Internal Server Error');
+            header('Content-Type: application/json; charset=UTF-8');
+            echo json_encode($response);            
+        } else {
+            echo "<span style='color:green' class='fa fa-check-square-o'></span>";
+        }
+    }
+
     public function check_password() {
         if ($_POST['pass1'] != $_POST['pass2']) {
             echo alert_user('Password & Repeat password should match');

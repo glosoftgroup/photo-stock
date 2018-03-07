@@ -3,7 +3,10 @@ if ( ! function_exists('siteinfo')){function siteinfo($info){ $ci =& get_instanc
 }
 if ( ! function_exists('user_details'))
 { 
-	function user_details($user_id,$field){
+	function user_details($user_id=FALSE,$field){
+		if(!$user_id){
+			$user_id = $_SESSION['id'];
+		}
 		$ci =& get_instance();
 		return $ci->user_model->get_user_info($user_id,$field);	}
 }
