@@ -3,34 +3,43 @@
    <div class="comd-12">
 			<div class="">
 			  <div class="panel-body">
-          <!-- upload -->
-          <div class="form-group col-lg-12">
-            <span class="gallery" v-if="full_path">
-              <img class="edit-preview" :src="full_path" alt='Post image'>
-              <span @click="removeImage" class="text-caption btn btn-warning">
-                <i class="icon-cross"></i>
-                Remove
-              </span>
-            </span>
-            <span :class="show_dropzone">
-              <vue-dropzone ref="myVueDropzone" id="dropzone" :options="dropzoneOptions">
-              </vue-dropzone>
-            </span>
-          </div>
-          <!-- title -->
-          <div class="form-group col-lg-12">
-						<label class="control-label">Title:</label>
-						<input class="form-control" v-model="title" name="title" id="title" placeholder="Post Title" type="text">			
-					</div>
-
-          <!-- body -->
-          <div class="form-group col-lg-12">
-            <quill-editor :content="body"
-                v-model="body"
-                :options="editorOption"
-               >
-            </quill-editor>
-          </div>
+          <div class="row">
+            <!-- body -->
+            <div class="col-md-6">
+              <!-- title -->
+              <div class="form-group col-lg-12">
+                <label class="control-label">Title:</label>
+                <input class="form-control" v-model="title" name="title" id="title" placeholder="Post Title" type="text">			
+              </div>
+              <!-- body -->
+              <div class="form-group col-lg-12">
+                <quill-editor :content="body"
+                    v-model="body"
+                    :options="editorOption"
+                  >
+                </quill-editor>
+              </div>
+            </div>
+            <!-- sidebar -->
+            <div class="col-md-6">
+               <!-- upload -->
+              <div class="form-group col-lg-12">
+                <span class="gallery" v-if="full_path">
+                  <img class="edit-preview" :src="full_path" alt='Post image'>
+                  <span @click="removeImage" class="text-caption btn btn-warning">
+                    <i class="icon-cross"></i>
+                    Remove
+                  </span>
+                </span>
+                <span :class="show_dropzone">
+                  <vue-dropzone @vdropzone-success="vsuccess" ref="myVueDropzone" id="dropzone" :options="dropzoneOptions">
+                  </vue-dropzone>
+                </span>
+              </div>
+            </div>          
+          </div>       
+          
+          
 
           <!-- submit -->
           <div class="col-md-12">
@@ -68,21 +77,24 @@ export default {
   data () {
     return {
       msg: 'Welcome to Your Vue.js App',
+      pk:false,
       title:'',
       body:'',
       alert_text:'',
       snackbar:false,
       full_path:'',
       full_size:'',
-      show_dropzone:'',
-      addUrl:window.location.href,
+      show_dropzone:true,
+      addUrl:baseUrl+'post/add/',
       uploadUrl: uploadUrl,
+      uploadResponse:[],
       editorOption: {
           // some quill options
       },
       dropzoneOptions: {
           url: uploadUrl,
-          thumbnailWidth: 150,
+          thumbnailWidth: 280,
+          addRemoveLinks: true,
           maxFiles:1,
           maxFilesize: 19.5,
           headers: { "My-Awesome-Header": "header value" },
@@ -110,6 +122,21 @@ export default {
     }
   },
   methods:{
+    vsuccess(file, response) {
+      this.success = true
+      try {
+         response = JSON.parse(response);
+         console.log(response);
+         console.log(this.dropzoneOptions.url);
+         this.pk = response.id;
+        //  this.dropzoneOptions.url += '/'+this.pk+'/';
+        //  console.log(this.dropzoneOptions.url);
+      } catch (error) {
+        console.log(error);
+      }
+     
+      // window.toastr.success('', 'Event : vdropzone-success')
+    },
     removeImage(){
       this.full_path = false;
       this.show_dropzone = '';
@@ -127,6 +154,9 @@ export default {
           self.addUrl = baseUrl+'post/add/'+pk+'/';
         }else{
           self.addUrl = baseUrl+'post/add/'
+        }
+        if(self.pk){
+          self.addUrl = baseUrl+'post/add/'+self.pk+'/';
         }
         this.axios.post(self.addUrl, formData)
         .then(function(response) {

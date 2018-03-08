@@ -54,7 +54,7 @@ function thumb($src, $width, $height, $image_thumb = '') {
 		$config['new_image'] = $image_thumb;
 		$config['x_axis'] = $crop_x;
 		$config['y_axis'] = $crop_y;
-		$config['maintain_ratio'] = FALSE;
+		$config['maintain_ratio'] = TRUE;
 
 		$CI->image_lib->initialize($config);
 		$CI->image_lib->crop();

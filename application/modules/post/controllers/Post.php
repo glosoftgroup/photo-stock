@@ -104,7 +104,7 @@ class Post extends MY_Controller {
 		}
 		$this->load->library('form_validation');
 		$this->form_validation->set_rules('title', 'Title', 'required');
-		$this->form_validation->set_rules('body', 'Body', 'required');
+		//$this->form_validation->set_rules('body', 'Body', 'required');
 		if ($this->form_validation->run() == FALSE)
         {
         	$data['title'] = 'Post Details';            
@@ -170,7 +170,9 @@ class Post extends MY_Controller {
 	        else
 	        {
 	            $data = $this->upload->data();
-	            $full_path = "uploads/"  . date('Y_M') . '/' . $this->upload->data()['orig_name'];
+	            $full_path = "uploads/"  . date('Y_M') . '/' . $this->upload->data()['orig_name'];	            
+
+	            
 
 	            $details = array(
 	            	'file_name'=> $data['file_name'], 
@@ -180,27 +182,25 @@ class Post extends MY_Controller {
 	            	'server_path' => $data['full_path']
 	            );
 
-	            //print_r($data);
 	            $file_path = $data['file_path'];
-	            // echo $file_path;
-	            //$thumb = $file_path .'_thumb';
-
-	            $thumb = thumb($data['full_path'], 500, 280);
-	            echo $thumb;
+	            $thumb = thumb($data['full_path'], 700, 580);
+	            //$path = pathinfo($data['full_path']);
+	            // print_r($path);
+	            $details['thumbnail'] = "uploads/" . date('Y_M') . DIRECTORY_SEPARATOR .$thumb;
 	            $thumb = $file_path .$thumb;
-	            //echo $data['full_path'];
+
+	            
 
 	            // add water mark
 	            $config['image_library'] = 'GD2';
-	            $config['source_image'] = $thumb;//'/path/to/image/mypic.jpg';
-				//$config['wm_text'] = 'Copyright 2006 - John Doe';
+	            $config['source_image'] = $thumb;
 				$config['wm_type'] = 'overlay';
 				$config['wm_overlay_path'] = 'assets/ibm.png';
 				$config['wm_vrt_alignment'] = 'middle'; 
 		        $config['wm_hor_alignment'] = 'center';
 		        $config['wm_hor_offset'] = '10';
 		        $config['wm_vrt_offset'] = '10';
-				//echo $config['wm_overlay_path'] = APPPATH. '../assets/ibm.png';
+				
 
 				$this->image_lib->initialize($config);
 
@@ -229,7 +229,7 @@ class Post extends MY_Controller {
 	            	set_sessionData('post_id',$insert_id);
 	                $status = "success";
 	                $msg = "File successfully uploaded";
-
+	                $details['id'] = $insert_id;
 	                echo json_encode($details);
 	            }
 	            else

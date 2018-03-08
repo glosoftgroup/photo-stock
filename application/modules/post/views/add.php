@@ -13,12 +13,12 @@
 </div>
 <script type="text/javascript">
 	var pk = false;
-	var uploadUrl = baseUrl+'/post/upload_file';
+	var uploadUrl = baseUrl+'post/upload_file';
 </script>
 <?php if(isset($pk)){ ?>
 <script type="text/javascript">
 	var pk = "<?=$pk;?>";
-	uploadUrl = baseUrl+'/post/upload_file/'+pk+'/';
+	uploadUrl = baseUrl+'post/upload_file/'+pk+'/';
 </script>
 <?php } ?>
 <?=theme_js('vue-webpack/dist/build.js');?>

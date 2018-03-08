@@ -53,7 +53,7 @@
         <masonry :cols="5" :gutter="30"  >          
          
           <li class="animated bounceInUp delay-250 go" v-for="(item, index) in items" :key="index">
-            <card :data-image="item.full_path">
+            <card :data-image="item.thumbnail">
               <span slot="header"></span>
               <p slot="content">{{item.title}}</p>
             </card> 
