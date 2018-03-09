@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <h2 class="text-center">Photo Stock</h2>
+    <h2 class="text-center">African Stock Images</h2>
 			<!-- search -->
 			<div class="row col-md-6 col-md-offset-3">		
 			    <nav class="navbar navbardefault">
@@ -15,20 +15,7 @@
 			                            <span class="label-icon">Search</span>
 			                            <span class="caret"></span>
 			                        </button>
-			                        <ul class="dropdown-menu pull-left" role="menu">
-			                           <li>
-			                                <a href="javascript:;">
-			                                    <span class="fa fa-user"></span>
-			                                    <span class="label-icon">Search By User</span>
-			                                </a>
-			                            </li>
-			                            <li>
-			                                <a href="javascript:;">
-			                                <span class="fa fa-book"></span>
-			                                <span class="label-icon">Search By Organization</span>
-			                                </a>
-			                            </li>
-			                        </ul>
+			                        
 			                    </div>
 			        
 			                    <input v-model="search" @keyup="inputChangeEvent" style="height: 47px;" type="text" class="form-control">
@@ -53,10 +40,12 @@
         <masonry :cols="5" :gutter="30"  >          
          
           <li class="animated bounceInUp delay-250 go" v-for="(item, index) in items" :key="index">
+            <a :href="baseUrl+'stock/art/'+item.id">
             <card :data-image="item.thumbnail">
               <span slot="header"></span>
               <p slot="content">{{item.title}}</p>
             </card> 
+            </a>
           </li>                    
         </masonry>
         </ul>
@@ -85,15 +74,12 @@ Vue.use(VueAxios, axios)
 Vue.component('card', {
   template: `
     <span class="card-wrap" ref="card">
-      <span class="card" :style="cardStyle">
-       
-         <img :src="this.dataImage" alt='Photo-stock'>
-         
-      
-        <div class="card-info">
-          <slot name="header"></slot>
-          <slot name="content"></slot>
-        </div>
+      <span class="card" :style="cardStyle">      
+          <img :src="this.dataImage" alt='Photo-stock'>     
+          <div class="card-info">
+            <slot name="header"></slot>
+            <slot name="content"></slot>
+          </div>
       </span>
     </span>`,
   mounted() {
@@ -165,7 +151,8 @@ export default {
       num:20,
       loader:'Load more..',
       show_loader:true,
-      items:[]
+      items:[],
+      baseUrl:baseUrl
     }
   },
   methods:{
@@ -332,8 +319,15 @@ h1+p, p+p {
   transition: 0.6s 1.6s cubic-bezier(0.215, 0.61, 0.355, 1);
   
   p {
-    opacity: 0;
-    text-shadow: rgba(black, 1) 0 2px 3px;
+    color: #fdfeff;
+    font-size: 14px;
+    line-height: 24px;
+    letter-spacing: 1px;
+    padding: 4px 6px 6px 6px;
+    border-radius: 5px;
+    margin: 0;
+    opacity:0;
+    background-color: #2b58b3;
     transition: 0.6s 1.6s cubic-bezier(0.215, 0.61, 0.355, 1);
   }
   

@@ -1,3 +1,5 @@
+<!-- africa stock image -->
+
 <style type="text/css">
 	.my-content{
 		/*display: flex;*/
@@ -37,7 +39,7 @@
 				<svg xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" viewBox="0 0 100 125" x="0px" y="0px"><title>Artboard 14</title><path d="M85,68.83H77.88a2.5,2.5,0,0,0,0,5H85a2.5,2.5,0,0,0,0-5Z"/><path d="M85,79.06H77.88a2.5,2.5,0,0,0,0,5H85a2.5,2.5,0,0,0,0-5Z"/><path d="M87.8,41.21H70.58V25.38A10.58,10.58,0,0,0,60,14.81H12.31A10.58,10.58,0,0,0,1.74,25.38V62A10.58,10.58,0,0,0,12.31,72.6H29.42V88.54A10.47,10.47,0,0,0,39.87,99H87.8A10.47,10.47,0,0,0,98.26,88.54V51.67A10.47,10.47,0,0,0,87.8,41.21Zm0,5a5.47,5.47,0,0,1,5.46,5.46v2.53H70.58v-8ZM6.74,62V25.38a5.58,5.58,0,0,1,5.57-5.57H60a5.58,5.58,0,0,1,5.57,5.57V62A5.58,5.58,0,0,1,60,67.6H12.31A5.58,5.58,0,0,1,6.74,62ZM87.8,94H39.87a5.47,5.47,0,0,1-5.46-5.46V72.6H60A10.58,10.58,0,0,0,70.58,62V59.19H93.26V88.54A5.47,5.47,0,0,1,87.8,94Z"/><path d="M22.61,55.18h-7a2.5,2.5,0,1,0,0,5h7a2.5,2.5,0,1,0,0-5Z"/><path d="M39.67,55.18h-7a2.5,2.5,0,1,0,0,5h7a2.5,2.5,0,0,0,0-5Z"/><path d="M56.73,55.18h-7a2.5,2.5,0,0,0,0,5h7a2.5,2.5,0,0,0,0-5Z"/><path d="M22.58,28.7H20a6.91,6.91,0,0,0,0,13.82h2.58a6.91,6.91,0,1,0,0-13.82Zm0,8.82H20a1.91,1.91,0,0,1,0-3.82h2.58a1.91,1.91,0,1,1,0,3.82Z"/><path d="M85,1a2.5,2.5,0,0,0-2.5,2.5V5.1a8.5,8.5,0,0,0-6.69,8.33c0,2.46,1.12,6.85,8.63,8.57,4.75,1.09,4.75,3.05,4.75,3.7,0,2.5-2.17,3.63-4.19,3.63a4.19,4.19,0,0,1-3.87-2.57,2.5,2.5,0,0,0-4.61,1.93,9.16,9.16,0,0,0,6,5.28v1.65a2.5,2.5,0,0,0,5,0V34a8.5,8.5,0,0,0,6.69-8.33c0-2.46-1.12-6.85-8.63-8.57-4.74-1.08-4.74-3.05-4.74-3.7,0-2.5,2.17-3.63,4.19-3.63a4.18,4.18,0,0,1,3.87,2.57,2.5,2.5,0,0,0,4.61-1.93,9.16,9.16,0,0,0-6-5.28V3.5A2.5,2.5,0,0,0,85,1Z"/></svg>Payments
 				</a>
 				</li>
-				<li><a href="#"><img src="assets/images/log-out.png" alt="log-out">Log Out</a></li>
+				
 				<?php } ?>
 			</ul>
 		</div>
@@ -53,11 +55,11 @@
 						<div class="row">
 							<div class="">
 								<div class="col-md-12">
-									<img src="<?=base_url().$post['full_path'];?>">
+									<img src="<?=base_url().$post['thumbnail'];?>">
 								</div>
 								<div class="col-md-12">
 								<br>
-									<h4 class="my-title"></h4>
+									<h4 class="my-title"><?=$post['title'];?></h4>
 									<p class="my-body">
 										<?=$post['body'];?>
 									</p>
@@ -74,8 +76,13 @@
 					     	<?=$post['file_type']; ?>
 					     </button>
 					   </span>
-					  	<div class="bottom"> 						
-								<button @click="checkEmail">Download</button>
+					   <h4 class="my-title"><?=$post['title'];?></h4>
+									<p class="my-body">
+										<?=$post['body'];?>
+									</p>
+					  	<div class=""> 						
+							<a style="color:#fff;" class="btn btn-primary" target="_blank" href="<?=base_url().$post['full_path'];?>">Download
+							</a>
 						</div>
 					  </div>
 					  <!-- /loggeding -->
@@ -106,33 +113,7 @@
 					  
 					</div>
 				</div>
-				<div class="content">
-					<div>
-						<img src="assets/images/vpn2.png" alt="vpn">
-					</div>
-					<div class="center">
-						<h6>VPS Hosting Basic Plan</h6>
-						<ul>
-							<li>RAM</li>
-							<li>Storage SSD</li>
-							<li>SAS Storage</li>
-							<li>CPU Cores</li>
-							<li>Brandwidth</li>
-						</ul>
-						<span><b>Price</b>Monthly</span>
-					</div>
-					<div class="last">
-						<a href="#">Change Plan</a>
-						<ul>
-							<li>8 GB</li>
-							<li>25 GB</li>
-							<li>50GB</li>
-							<li>2</li>
-							<li>2 TB</li>
-						</ul>
-						<span>80$/Month</span>
-					</div>
-				</div><!--content-->
+				
 			</div>
 			<!--===================== End of Plan ========================-->
 			<?php if($this->aauth->is_loggedin()){ ?>

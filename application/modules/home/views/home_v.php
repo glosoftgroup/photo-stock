@@ -157,27 +157,4 @@
 </div>
 <!--===================== End of User Slider ========================-->
 	<div class="pre-footer"><img src="<?=img_url('frontend');?>/line-prefoter.svg" alt="bg-prefooter"></div> 
-<!--===================== Search Domain ========================-->
-<div class="search-domain animatedParent">
-	<div class="container animated fadeInUpShort">
-		<div class="row">
-			<div class="col-md-4 col-xs-12">
-				<h3>Search Your Domain</h3>
-			</div>
-			<div class="col-md-8 col-xs-12">
-				<form>
-					<div class="form-group">
-						<input type="text" placeholder="Domain Name">
-						<select>
-							<option value=".com">.com</option>
-							<option value=".ua">.ua</option>
-							<option value=".nu">.nu</option>
-						</select>
-					</div>
-					<button class="custom-btn green">Search</button>
-				</form>
-			</div>
-		</div>
-	</div>
-</div>
-<!--===================== End of Search Domain ========================-->
+

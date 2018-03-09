@@ -10,7 +10,10 @@ class Post extends MY_Controller {
 	function __construct()
 	{
 		parent::__construct(); 
-		$this->load->model('aauth_post_model');            
+		$this->load->model('aauth_post_model');
+		$this->load->model('Aauth_categorie_model');
+		$this->load->model('Aauth_taxonomy_meta_model');
+
 	}
 
 	
@@ -71,12 +74,32 @@ class Post extends MY_Controller {
         echo json_encode($data['logs']);
     }
 
+    public function list_categories(){
+		$categories = $this->Aauth_categorie_model->get_all();
+		$results = array();
+		foreach ($categories as $key => $value) {
+			# format keys
+			$results[$key]['id'] = $value->name;
+			$results[$key]['text'] = $value->name;
+		}
+		echo json_encode($results);
+		
+	}
+
     // get cubrid_is_instance(conn_identifier, oid)
     public function get($edit=FALSE){
     	accessPermisson('view dashboard');
     	if($edit){
     		$row = $this->aauth_post_model->get($edit);
-    		$data['results'] = $row;
+    		$post_toxi = $this->Aauth_taxonomy_meta_model->get_many_by('post_id',(int)$edit);
+    		$categories = array();
+    		foreach ($post_toxi as $key=>$value) {
+    			# populate categories.
+    			$categories[$key]['id'] = $value->category_name;
+    			$categories[$key]['text'] = $value->category_name;
+    		}
+    		$data['results'] = (array)$row;
+    		$data['results']['categories'] = $categories;
     		echo json_encode($data);
     	}else{
     		echo json_encode(array('message'=>'Post id required'));
@@ -112,7 +135,9 @@ class Post extends MY_Controller {
         else
         {
         	$data['title'] = 'Post Details';
-
+        	$categories = json_decode($this->input->post('categories'
+        		));
+        	print_r($categories);
         	$details = array(
             	'title'=> $this->input->post('title'),
             	'body'=>  $this->input->post('body')
@@ -121,18 +146,69 @@ class Post extends MY_Controller {
 	     		$row = $this->aauth_post_model->get($_SESSION['post_id']);
 	            	if(sizeof($row) <= 0){
 	            		$insert_id = $this->aauth_post_model->insert($details, FALSE);
-	            		set_sessionData('post_id',$insert_id);	
+	            		set_sessionData('post_id',$insert_id);		
 	            	}
 	            $insert_id = $this->aauth_post_model->update($_SESSION['post_id'],$details);
 	        }else{
 	        	$insert_id = $this->aauth_post_model->insert($details, FALSE);
 	        	set_sessionData('post_id',$insert_id);
-	        }   
+	        } 
+	        // insert categories
+    		$this->update_categories($categories, $_SESSION['post_id']);  
         }
 
         $this->template->title($data['title'])        
 			         ->build('add', $data);
 		
+	}
+
+	public function update_categories($categories=FALSE,$post_id=FALSE)
+	{
+		if(!$post_id){
+			return FALSE;
+		}
+		if(!$categories){
+			return FALSE;
+		}
+
+		// delete post taxonomy
+		// get all taxomies by category & post
+		$arr = array('post_id'=>$post_id);
+		$taxonomies = $this->Aauth_taxonomy_meta_model->get_many_by($arr);
+
+		// delete all and update with newly selected			
+		if(sizeof($taxonomies) > 0)
+		{
+			foreach ($taxonomies as $toxi) {
+				# delete them all :()
+				$delete_id = $this->Aauth_taxonomy_meta_model->delete( $toxi->id);
+			}
+		}
+
+		// update post taxonomy
+		foreach ($categories as $value) {
+			# check if category exists else create
+			$row = $this->Aauth_categorie_model->get_by('name', $value);
+			// if empty create new category
+			if(sizeof($row) <= 0)
+			{
+				$details = array('name'=>$value);
+				$category_id = $this->Aauth_categorie_model->insert($details, FALSE);
+			}else{
+				$category_id = $row->id;
+			}		
+
+			$arr = array(
+				'category_id'=>$category_id, 
+				'category_name'=>$value,
+				'post_id'=>$post_id
+			);
+			// add taxonomy based on this category and taxonomy
+			$insert_id = $this->Aauth_taxonomy_meta_model->insert($arr, FALSE);
+			// return $insert_id;
+
+		}
+
 	}
 		
 	// create upload directory

@@ -12,7 +12,9 @@ class Admin extends MY_Controller {
 	{
 		if(!$this->aauth->is_loggedin()){ redirect('login'); exit; }
 		//$this->aauth->allow_user($_SESSION['id'],1);
-		//if(!$this->aauth->is_allowed("view dashboard")){ redirect('home'); exit; }	
+		//if(!$this->aauth->is_allowed("view dashboard")){ redirect('home'); exit; }
+
+		redirect('post');	
 
 		$data['title'] = ' Dashboard';		
 		

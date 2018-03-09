@@ -11,8 +11,15 @@
                 <label class="control-label">Title:</label>
                 <input class="form-control" v-model="title" name="title" id="title" placeholder="Post Title" type="text">			
               </div>
+              <div class="content-group-lg col-md-12">
+                <label >Categories:</label>
+                <vselect multiple="multiple" id="category" v-model="category" :options="categories">
+                  <option disabled value="0">Select Categories</option>
+                </vselect> 
+              </div>
               <!-- body -->
               <div class="form-group col-lg-12">
+                 <label class="control-label">Body:</label>
                 <quill-editor :content="body"
                     v-model="body"
                     :options="editorOption"
@@ -24,6 +31,7 @@
             <div class="col-md-6">
                <!-- upload -->
               <div class="form-group col-lg-12">
+                <label>Image:</label>
                 <span class="gallery" v-if="full_path">
                   <img class="edit-preview" :src="full_path" alt='Post image'>
                   <span @click="removeImage" class="text-caption btn btn-warning">
@@ -35,11 +43,10 @@
                   <vue-dropzone @vdropzone-success="vsuccess" ref="myVueDropzone" id="dropzone" :options="dropzoneOptions">
                   </vue-dropzone>
                 </span>
+                <span class="help-block">Maximum 1 image per post</span>
               </div>
             </div>          
-          </div>       
-          
-          
+          </div>        
 
           <!-- submit -->
           <div class="col-md-12">
@@ -61,6 +68,7 @@ import Vue from 'vue'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import VueQuillEditor from 'vue-quill-editor'
+import Select2 from "./Select"
 
 import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
@@ -68,11 +76,13 @@ import 'quill/dist/quill.bubble.css'
 
 Vue.use(VueQuillEditor)
 Vue.use(VueAxios, axios)
+Vue.use('vselect',Select2)
 
 export default {
   name: 'app',
   components: {
-    vueDropzone: vue2Dropzone
+    vueDropzone: vue2Dropzone,
+    vselect:Select2
   },
   data () {
     return {
@@ -85,19 +95,16 @@ export default {
       full_path:'',
       full_size:'',
       show_dropzone:true,
-      addUrl:baseUrl+'post/add/',
+      addUrl:addUrl,
       uploadUrl: uploadUrl,
+      category:[],
+      list:[],
+      post_categories:[],
+      categories: [],
       uploadResponse:[],
       editorOption: {
           // some quill options
-      },
-      dropzoneOptions: {
-          url: uploadUrl,
-          thumbnailWidth: 280,
-          addRemoveLinks: true,
-          maxFiles:1,
-          maxFilesize: 19.5,
-          headers: { "My-Awesome-Header": "header value" },
+          headers: { "My-Awesome-Header": "header value" },          
           modules: {
             toolbar: [
               ['bold', 'italic', 'underline', 'strike'],
@@ -118,7 +125,23 @@ export default {
               highlight: text => hljs.highlightAuto(text).value
             }
           }
+      },
+      dropzoneOptions: {
+          url: uploadUrl,
+          thumbnailWidth: 280,
+          addRemoveLinks: true,
+          maxFiles:1,
+          maxFilesize: 19.5,
+          headers: { "My-Awesome-Header": "header value" },          
       }
+    }
+  },
+  watch:{
+    category: function(val, oldVal){
+      // console.log(val);
+      // this.list.push(val);
+      // console.log(this.list);
+      console.log($('#category').val());
     }
   },
   methods:{
@@ -128,7 +151,7 @@ export default {
          response = JSON.parse(response);
          console.log(response);
          console.log(this.dropzoneOptions.url);
-         this.pk = response.id;
+         // this.pk = response.id;
         //  this.dropzoneOptions.url += '/'+this.pk+'/';
         //  console.log(this.dropzoneOptions.url);
       } catch (error) {
@@ -141,12 +164,14 @@ export default {
       this.full_path = false;
       this.show_dropzone = '';
     },
-     addPost(){
+    addPost(){
         var self = this;
         // add or update student details if pk is provided
         this.axios.defaults.xsrfHeaderName = "X-CSRFToken"
         this.axios.defaults.xsrfCookieName = 'csrftoken'
         var formData = new FormData();
+
+        formData.append('categories',JSON.stringify($('#category').val()));
 
         formData.append('title', this.title); 
         formData.append('body', this.body);
@@ -161,7 +186,7 @@ export default {
         this.axios.post(self.addUrl, formData)
         .then(function(response) {
             console.log('submited');
-            window.location.href = baseUrl+'post/';
+            // window.location.href = baseUrl+'post/';
             self.alert_text = 'Data updated successfuly';
             self.snackbar = true;            
         })
@@ -169,27 +194,50 @@ export default {
             console.log('error ocursdf');
             console.log(err);
         });
-     }
+    },
+    getPost(){
+      var self = this;
+      if(pk){
+        //this.uploadUrl = baseUrl+'/post/upload_file/'+pk+'/';
+        this.show_dropzone = 'hidden';
+        // get and edit details
+        this.$http.get(baseUrl+'post/get/'+pk+'/')
+              .then(function(data){ 
+                  data = data.data.results;
+                  self.post_categories = data.categories
+                  self.title = data.title;
+                  self.body = data.body;
+                  self.full_path = baseUrl+data.full_path;
+                  self.full_size = data.full_size;
+
+                  if(data.categories.length >1){
+                    self.post_categories.forEach(item => {
+                      self.list.push(item.text);                     
+                    });
+                    $("#category").val(self.list).trigger("change");                     
+                  }else{
+                    $("#category").val(data.categories[0].text).trigger("change");                     
+                  }
+                               
+              }, function(error){
+                  console.log(error.statusText);
+              });
+      }
+    },
+    getCategories(){
+      var self = this;
+      this.$http.get(baseUrl+'post/list_categories/')
+              .then(function(data){ 
+                data = data.data               
+                self.categories = data;                                
+              }, function(error){
+                console.log(error.statusText);
+              });
+    }
   },
   mounted:function(){
-    var self = this;
-    if(pk){
-      //this.uploadUrl = baseUrl+'/post/upload_file/'+pk+'/';
-      this.show_dropzone = 'hidden';
-      // get and edit details
-      this.$http.get(baseUrl+'post/get/'+pk+'/')
-            .then(function(data){                
-                data = data.data.results;
-                console.log(data);
-                self.title = data.title;
-                self.body = data.body;
-                self.full_path = baseUrl+data.full_path;
-                self.full_size = data.full_size;
-                               
-            }, function(error){
-                console.log(error.statusText);
-      });
-    }
+    this.getPost();
+    this.getCategories();    
   } // end on mount
 }
 </script>
