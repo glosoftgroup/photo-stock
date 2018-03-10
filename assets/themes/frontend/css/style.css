@@ -336,7 +336,7 @@ input:-moz-placeholder {
 /* 01. Header
    ==================================== */
 header {
-  padding: 50px 0;
+  /*padding: 50px 0;*/
   margin-bottom: 90px;
   position: relative;
   background-color: #0479ec;
@@ -346,7 +346,7 @@ header.transparent {
   left: 0;
   width: 100%;
   z-index: 999999;
-  padding: 50px 0 0;
+  padding: 20px 0 0;
   position: absolute;
   margin-bottom: 0;
   background-color: transparent;
@@ -375,7 +375,7 @@ header .row {
       align-items: center;
 }
 header .logo img {
-  max-width: 144px;
+  max-width: 86px;
 }
 header .menu {
   text-align: right;
@@ -1491,7 +1491,8 @@ footer {
 .our-team ul {
   width: 100%;
   display: inline-block;
-  margin-bottom: 54px;
+  /*margin-bottom: 54px;*/
+  margin-bottom: 0px;
 }
 .our-team ul li {
   width: 234px;
@@ -2679,8 +2680,9 @@ footer {
 /* 02. Choice Plan
    ==================================== */
 .choice-plan {
-  margin-bottom: 112px;
-  padding: 160px 0 0;
+  /*margin-bottom: 112px;*/
+  margin-bottom: 0px;
+  padding: 0px 0 0;
   background-size: cover;
   background: #f6fafd url(../images/choice-plan.png) no-repeat top;
 }
@@ -3136,7 +3138,7 @@ footer {
 .mobile-menu-btn span:after {
   width: 35px;
   height: 3px;
-  background-color: #fff;
+  background-color: #b73b16;
   display: block;
 }
 /*=====  End of 17. Mobile Menu Style  ======*/

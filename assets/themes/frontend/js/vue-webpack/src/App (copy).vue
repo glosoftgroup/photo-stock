@@ -1,6 +1,11 @@
 <template>
   <div id="app">
-    <h2 class="text-center">Photo Stock</h2>
+    <div class="row col-md-6 col-md-offset-3">
+      <div class="textcenter tagline theme-title">
+        <strong>Find amazing content for your next project</strong>
+        <h4 class="inherit">Search millions of hand-picked images within the application.</h4>
+      </div>
+    </div>
 			<!-- search -->
 			<div class="row col-md-6 col-md-offset-3">		
 			    <nav class="navbar navbardefault">
@@ -15,20 +20,7 @@
 			                            <span class="label-icon">Search</span>
 			                            <span class="caret"></span>
 			                        </button>
-			                        <ul class="dropdown-menu pull-left" role="menu">
-			                           <li>
-			                                <a href="javascript:;">
-			                                    <span class="fa fa-user"></span>
-			                                    <span class="label-icon">Search By User</span>
-			                                </a>
-			                            </li>
-			                            <li>
-			                                <a href="javascript:;">
-			                                <span class="fa fa-book"></span>
-			                                <span class="label-icon">Search By Organization</span>
-			                                </a>
-			                            </li>
-			                        </ul>
+			                        
 			                    </div>
 			        
 			                    <input v-model="search" @keyup="inputChangeEvent" style="height: 47px;" type="text" class="form-control">
@@ -46,23 +38,28 @@
 			</div>
 			<!-- search -->
 			<!-- results -->
-			<div class="row col-md-12 ">       
+			<div class="row col-md-12">       
 				<!-- cards -->  
-        <div class="our-team animatedParent">       
+        <div class="our-team animatedParent">
         <ul>
+        <masonry :cols="5" :gutter="30"  >          
+         
           <li class="animated bounceInUp delay-250 go" v-for="(item, index) in items" :key="index">
-            <card :data-image="item.full_path">
-              <span slot="header">{{item.title}}</span>
-              <p slot="content"></p>
+            <a :href="baseUrl+'stock/art/'+item.id">
+            <card :data-image="item.thumbnail">
+              <span slot="header"></span>
+              <p slot="content">{{item.title}}</p>
             </card> 
-          </li>
+            </a>
+          </li>                    
+        </masonry>
         </ul>
         </div>
         <!-- ./cards -->
 
 			</div>
       <div class="col-md-12 text-center row" v-show="show_loader">
-        <button @click="loadMore" class="custom-btn login load-more-btn">
+        <button @click="loadMore" class="load-more-btn">
           {{loader}}
         </button>
       </div>
@@ -81,14 +78,15 @@ Vue.use(VueAxios, axios)
 
 Vue.component('card', {
   template: `
-      <span>
-        <img :src="this.dataImage" alt='Photo-stock'>
-        <div class="inside">      
+    <span class="card-wrap" ref="card">
+      <span class="card" :style="cardStyle">      
+          <img :src="this.dataImage" alt='Photo-stock'>     
+          <div class="card-info">
             <slot name="header"></slot>
-            <slot name="content"></slot>       
-        </div> 
-      </span>   
-   `,
+            <slot name="content"></slot>
+          </div>
+      </span>
+    </span>`,
   mounted() {
     this.width = this.$refs.card.offsetWidth;
     console.log(this.width)
@@ -154,11 +152,12 @@ export default {
       search:'',
       status:'',
       page_size:20,
-      start:0,
+      start:20,
       num:20,
       loader:'Load more..',
       show_loader:true,
-      items:[]
+      items:[],
+      baseUrl:baseUrl
     }
   },
   methods:{
@@ -171,7 +170,6 @@ export default {
             console.log('submited');                       
         })
         .catch(function(err) {
-            console.log('error ocursdf');
             console.log(err);
         });
     },
@@ -192,20 +190,23 @@ export default {
     loadMore(){
       var self = this;
       this.loader = 'Loading ....'
-      this.$http.get(baseUrl+'post/load_more/'+this.num+'/'+this.start+'/')
+      this.$http.get(baseUrl+'post/load_more/'+self.num+'/'+self.start+'/')
             .then(function(data){
                 data = data.data.results;
                 if(data.length <=0){
                   self.show_loader = false;                  
                 }
                 self.loader = 'Load More'
-                self.items.push({
-                              full_path: data[i].full_path,
-                              title:data[i].title,
-                              body:data[i].body,
-                              timestamp:moment(data[i].timestamp).format('YYYY-MM-DD'),                             
-                              id:data[i].id
-                              });
+                data.forEach(item => {
+                  self.items.push(item);                     
+                });
+                // self.items.push({
+                //               full_path: data[i].full_path,
+                //               title:data[i].title,
+                //               body:data[i].body,
+                //               timestamp:moment(data[i].timestamp).format('YYYY-MM-DD'),                             
+                //               id:data[i].id
+                //               });
                }, function(error){
                 console.log(error.statusText);
         });
@@ -291,7 +292,7 @@ h1+p, p+p {
   position: relative;
   flex: 0 0 332px;
   // width: 332px;
-  height: 240px;
+  height: 180px;
   // background-color: #333;
   overflow: hidden;
   
@@ -325,8 +326,15 @@ h1+p, p+p {
   transition: 0.6s 1.6s cubic-bezier(0.215, 0.61, 0.355, 1);
   
   p {
-    opacity: 0;
-    text-shadow: rgba(black, 1) 0 2px 3px;
+    color: #fdfeff;
+    font-size: 14px;
+    line-height: 24px;
+    letter-spacing: 1px;
+    padding: 4px 6px 6px 6px;
+    border-radius: 5px;
+    margin: 0;
+    opacity:0;
+    background-color: #e15126;
     transition: 0.6s 1.6s cubic-bezier(0.215, 0.61, 0.355, 1);
   }
   
@@ -357,4 +365,35 @@ h1+p, p+p {
   text-shadow: rgba(black, 0.5) 0 10px 10px;
 }
 
+.load-more-btn{
+  color: #fdfeff;
+  font-size: 14px;
+  line-height: 24px;
+  letter-spacing: 1px;
+  padding: 4px 6px 6px 6px;
+  border-radius: 5px;
+  margin: 0;
+  background-color: #e15126;
+  transition: 0.6s 1.6s cubic-bezier(0.215, 0.61, 0.355, 1);
+  transition: 5s 1s $returnEasing;
+  border: 1px solid transparent;
+}
+
+.btn .load-more-btn:focus{
+  color: #fdfeff;
+}
+
+.our-team{
+  margin-bottom:0px;
+}
+.navbar-search{
+  margin-bottom: 66px;
+}
+
+.form-control:focus {
+    border-color: #ea4b1cb3;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(233, 153, 102, 0.6);
+}
 </style>

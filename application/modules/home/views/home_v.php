@@ -12,114 +12,11 @@
 				</div>
 			</div>
 			<!--===================== End of Partner ========================-->
-			<!--===================== Why Choose ========================-->
-			<div class="why-choose animatedParent">
-				<h2 class="title-head">Why you should choose us</h2>
-				<div class="row">
-					<div class="col-md-4 col-xs-12 animated bounceInUp delay-250">
-						<div class="inside">
-							<img src="<?=img_url('frontend');?>/optimised.svg" alt="optimised">
-							<a href="#">Totaly Optimised</a>
-							<p>Our wordpress theme is totaly optimised for you needs. Very fast and responsive website convert your traffic to new customers.</p>
-							<a href="#" class="read-more">Learn More <img src="<?=img_url('frontend');?>/right.png" alt="right"></a>
-						</div><!--inside-->
-					</div>
-					<div class="col-md-4 col-xs-12 animated bounceInUp delay-500">
-						<div class="inside">
-							<img src="<?=img_url('frontend');?>/powerfull.svg" alt="powerfull">
-							<a href="#">Powerful Features</a>
-							<p>Our theme get everything you need to work with your hosting website. Its fresh, brandly new and with awesome customizing features. </p>
-							<a href="#" class="read-more">Learn More <img src="<?=img_url('frontend');?>/right.png" alt="right"></a>
-						</div><!--inside-->
-					</div>
-					<div class="col-md-4 col-xs-12 animated bounceInUp delay-750">
-						<div class="inside">
-							<img src="<?=img_url('frontend');?>/website.svg" alt="website">
-							<a href="#">Worldwide Support</a>
-							<p>We will do suppor to your theme almost 24/7. If you get some bugs or have some problems - just simply write to us. </p>
-							<a href="#" class="read-more">Learn More <img src="<?=img_url('frontend');?>/right.png" alt="right"></a>
-						</div><!--inside-->
-					</div>
-				</div>
-			</div>
-			<!--===================== End of Why Choose ========================-->
-			<!--===================== Hosting Software ========================-->
-			<div class="hosting-software">
-				<h2 class="title-head">Powerful Hosting Software</h2>
-				<ul id="counter">
-					<li><b class="count" data-count="244">0</b><span>servers</span></li>
-					<li>1M+<span>TB total space</span></li>
-					<li><b class="count" data-count="5">0</b><span>color schemes</span></li>
-					<li><b class="count" data-count="10">0</b><span>faster</span></li>
-				</ul>
-			</div>
-			<!--===================== End of Hosting Software ========================-->
+		
+			
 		</div>
 	</section>
-	<!--===================== Pricing Table ========================-->
-	<div class="pricing-table animatedParent">
-		<div class="container">
-			<h2 class="title-head">Linux Reseller Hosting</h2>
-			<p>High Performance cPanel WHM Reseller Hosting in Europe</p>
-			<ul class="pricing-list">
-				<li class="animated bounceInLeft delay-250">
-					<div class="images"><img src="<?=img_url('frontend');?>/server.svg" alt="server"></div>
-					<h5>Dedicated Server</h5>
-					<p>There are many variations of passages of Lorem Ipsum available.</p>
-					<span><b>From</b></span>
-					<div class="price">80$<span>/month</span></div>
-					<a href="service-page.html" class="custom-btn">Get Started Now</a>
-				</li>
-				<li class="animated bounceInLeft delay-500">
-					<div class="images"><img src="<?=img_url('frontend');?>/hosting.svg" alt="hosting"></div>
-					<h5>Reseller Hosting</h5>
-					<p>There are many variations of passages of Lorem Ipsum available.</p>
-					<span><b>From</b></span>
-					<div class="price">160$<span>/month</span></div>
-					<a href="service-page.html" class="custom-btn">Get Started Now</a>
-				</li>
-				<li class="animated bounceInLeft delay-750">
-					<div class="images"><img src="<?=img_url('frontend');?>/hosting2.svg" alt="hosting2"></div>
-					<h5>Shared Hosting</h5>
-					<p>There are many variations of passages of Lorem Ipsum available.</p>
-					<span><b>From</b></span>
-					<div class="price">9$<span>/month</span></div>
-					<a href="service-page.html" class="custom-btn">Get Started Now</a>
-				</li>
-				<li class="animated bounceInLeft delay-1000">
-					<div class="images"><img src="<?=img_url('frontend');?>/vps.svg" alt="vpn"></div>
-					<h5>VPS Hosting</h5>
-					<p>There are many variations of passages of Lorem Ipsum available.</p>
-					<span><b>From</b></span>
-					<div class="price">82$<span>/month</span></div>
-					<a href="service-page.html" class="custom-btn">Get Started Now</a>
-				</li>
-			</ul><!--pricing-list-->
-			<div class="info-pricing animated bounceInRight delay-250">
-				<h4>Why you need a HOSTING?</h4>
-				<ul>
-					<li>
-						<h6>Easy to Customize</h6>
-						<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </p>
-					</li>
-					<li class="right">
-						<h6>Powerful Security</h6>
-						<p>Letraset sheets containing Lorem Ipsum passages, and more recently with desktop.</p>
-					</li>
-				</ul>
-				<ul class="right">
-					<li>
-						<h6>Market Performance</h6>
-						<p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered.</p>
-					</li>
-					<li class="button right">
-						<a href="service-page.html" class="custom-btn">Get Started Now</a>
-					</li>
-				</ul>
-			</div><!--info-pricing-->
-		</div>
-	</div>
-	<!--===================== End of Pricing Table ========================-->
+	
 	<!--===================== User Slider ========================-->
 <div class="user-slider">
 	<div class="container">

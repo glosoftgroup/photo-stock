@@ -1,42 +1,74 @@
 <template>
   <div id="app">
-    <h2 class="text-center">African Stock Images</h2>
+      <div class="row col-md-6 p-170 col-md-offset-3">
+        <div class="text-center tagline theme-title">
+          <strong>Find amazing content for your next project</strong>
+          <h4 class="inherit">Search millions of hand-picked images within the application.</h4>
+        </div>
+      </div>
+      
 			<!-- search -->
-			<div class="row col-md-6 col-md-offset-3">		
-			    <nav class="navbar navbardefault">
-			        <div class="nav nav-justified navbar-nav">
-			 
-			            <form class="navbarform navbar-search" role="search">
-			                <div class="input-group">
-			                
-			                    <div class="input-group-btn">
-			                        <button type="button" style="height: 47px;" class="btn btn-search btn-default dropdown-toggle" data-toggle="dropdown">
-			                            <!-- search icon -->
-			                            <span class="label-icon">Search</span>
-			                            <span class="caret"></span>
-			                        </button>
-			                        
-			                    </div>
-			        
-			                    <input v-model="search" @keyup="inputChangeEvent" style="height: 47px;" type="text" class="form-control">
-			                
-			                    <div class="input-group-btn">
-			                        <button @click="inputChangeEvent" type="button" style="height: 47px;" class="btn btn-search btn-default">
-			                        GO
-			                        </button>		                         
-			                    </div>
-			                </div>  
-			            </form>   
-			         
-			        </div>
-			    </nav>
-			</div>
+      <div class="col-md-6 col-md-offset-3">		
+          <nav class="navbar navbardefault">
+              <div class="nav nav-justified navbar-nav">
+      
+                  <form class="navbarform navbar-search" role="search">
+                      <div class="input-group">
+                      
+                          <div class="input-group-btn">
+                              <button type="button" style="height: 47px;" class="btn btn-search btn-default dropdown-toggle" data-toggle="dropdown">
+                                  <!-- search icon -->
+                                  <span class="label-icon">Search</span>
+                                  <span class="caret"></span>
+                              </button>
+                              
+                          </div>
+              
+                          <input v-model="search" @keyup="inputChangeEvent" style="height: 47px;" type="text" class="form-control" placeholder="Search stock images">
+                      
+                          <div class="input-group-btn">
+                              <button @click="inputChangeEvent" type="button" style="height: 47px;" class="btn btn-search btn-default">
+                              GO
+                              </button>		                         
+                          </div>
+                      </div>  
+                  </form>   
+              
+              </div>
+          </nav>
+      </div>
 			<!-- search -->
 			<!-- results -->
 			<div class="row col-md-12">       
 				<!-- cards -->  
         <div class="our-team animatedParent">
-        <ul>
+        <ul v-if="$mq === 'mobile'">
+        <masonry :cols="1" :gutter="30"  >          
+         
+          <li class="animated bounceInUp delay-250 go" v-for="(item, index) in items" :key="index">
+            <a :href="baseUrl+'stock/art/'+item.id">
+            <card :data-image="item.thumbnail">
+              <span slot="header"></span>
+              <p slot="content">{{item.title}}</p>
+            </card> 
+            </a>
+          </li>                    
+        </masonry>
+        </ul>
+        <ul v-if="$mq === 'tablet'">
+        <masonry :cols="2" :gutter="30"  >          
+         
+          <li class="animated bounceInUp delay-250 go" v-for="(item, index) in items" :key="index">
+            <a :href="baseUrl+'stock/art/'+item.id">
+            <card :data-image="item.thumbnail">
+              <span slot="header"></span>
+              <p slot="content">{{item.title}}</p>
+            </card> 
+            </a>
+          </li>                    
+        </masonry>
+        </ul>
+        <ul v-else>
         <masonry :cols="5" :gutter="30"  >          
          
           <li class="animated bounceInUp delay-250 go" v-for="(item, index) in items" :key="index">
@@ -54,7 +86,7 @@
 
 			</div>
       <div class="col-md-12 text-center row" v-show="show_loader">
-        <button @click="loadMore" class="custom-btn login load-more-btn">
+        <button @click="loadMore" class="load-more-btn">
           {{loader}}
         </button>
       </div>
@@ -67,6 +99,16 @@ import Vue from 'vue'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import VueMasonry from 'vue-masonry-css'
+import VueMq from 'vue-mq'
+
+Vue.use(VueMq, {
+  breakpoints: {
+    mobile: 450,
+    tablet: 900,
+    laptop: 1250,
+    desktop: Infinity,
+  }
+})
 
 Vue.use(VueMasonry);
 Vue.use(VueAxios, axios)
@@ -84,7 +126,7 @@ Vue.component('card', {
     </span>`,
   mounted() {
     this.width = this.$refs.card.offsetWidth;
-    console.log(this.width)
+    // console.log(this.width)
     this.height = this.$refs.card.offsetHeight;
   },
   props: ['dataImage'],
@@ -147,9 +189,9 @@ export default {
       search:'',
       status:'',
       page_size:20,
-      start:0,
+      start:20,
       num:20,
-      loader:'Load more..',
+      loader:'Discover more..',
       show_loader:true,
       items:[],
       baseUrl:baseUrl
@@ -165,7 +207,6 @@ export default {
             console.log('submited');                       
         })
         .catch(function(err) {
-            console.log('error ocursdf');
             console.log(err);
         });
     },
@@ -177,6 +218,9 @@ export default {
             .then(function(data){
                 data = data.data;
                 self.items = data.results;
+                if(self.items.length > 0){
+                  this.show_loader = true;
+                }
                 // this.totalPages = precisionRound(parseFloat(data.total_pages),0);                
                 
             }, function(error){
@@ -186,24 +230,27 @@ export default {
     loadMore(){
       var self = this;
       this.loader = 'Loading ....'
-      this.$http.get(baseUrl+'post/load_more/'+this.num+'/'+this.start+'/')
+      this.$http.get(baseUrl+'post/load_more/'+self.num+'/'+self.start+'/')
             .then(function(data){
                 data = data.data.results;
                 if(data.length <=0){
                   self.show_loader = false;                  
                 }
                 self.loader = 'Load More'
-                self.items.push({
-                              full_path: data[i].full_path,
-                              title:data[i].title,
-                              body:data[i].body,
-                              timestamp:moment(data[i].timestamp).format('YYYY-MM-DD'),                             
-                              id:data[i].id
-                              });
+                data.forEach(item => {
+                  self.items.push(item);                     
+                });
+                // self.items.push({
+                //               full_path: data[i].full_path,
+                //               title:data[i].title,
+                //               body:data[i].body,
+                //               timestamp:moment(data[i].timestamp).format('YYYY-MM-DD'),                             
+                //               id:data[i].id
+                //               });
                }, function(error){
                 console.log(error.statusText);
         });
-      this.start += this.num;
+      self.start += self.num;
     }
   },
   mounted: function(){
@@ -327,7 +374,7 @@ h1+p, p+p {
     border-radius: 5px;
     margin: 0;
     opacity:0;
-    background-color: #2b58b3;
+    background-color: #e15126;
     transition: 0.6s 1.6s cubic-bezier(0.215, 0.61, 0.355, 1);
   }
   
@@ -356,6 +403,38 @@ h1+p, p+p {
   font-size: 36px;
   font-weight: 700;
   text-shadow: rgba(black, 0.5) 0 10px 10px;
+}
+
+.load-more-btn{
+  color: #fdfeff;
+  font-size: 14px;
+  line-height: 24px;
+  letter-spacing: 1px;
+  padding: 4px 6px 6px 6px;
+  border-radius: 5px;
+  margin: 0;
+  background-color: #e15126;
+  transition: 0.6s 1.6s cubic-bezier(0.215, 0.61, 0.355, 1);
+  transition: 5s 1s $returnEasing;
+  border: 1px solid transparent;
+}
+
+.btn .load-more-btn:focus{
+  color: #fdfeff;
+}
+
+.our-team{
+  margin-bottom:0px;
+}
+.navbar-search{
+  margin-bottom: 66px;
+}
+
+.form-control:focus {
+    border-color: #ea4b1cb3;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(233, 153, 102, 0.6);
 }
 
 </style>

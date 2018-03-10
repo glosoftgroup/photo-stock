@@ -97,6 +97,7 @@
                   <tr class="bg-primary">
                     <th>Preview</th>
                     <th>Title</th>
+                    <th>Categories</th>
                     <th>Date</th>
                     <th>File info</th>
                     <th>Actions</th>
@@ -135,7 +136,13 @@
                         <td>
                             ${item.title} 
                         </td>
-                        
+                        <td>
+                          <span v-for="cat in item.categories">
+                            <span class="label label-primary" style="margin-right: 5px;">
+                            &nbsp;${cat.category_name}&nbsp;
+                            </span>
+                          </span>
+                        </td>
                         <td>
                           ${item.timestamp}
                         </td>

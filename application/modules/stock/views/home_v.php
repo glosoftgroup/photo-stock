@@ -21,6 +21,22 @@
 	    background: #000;
 	    color: whitesmoke;
 	}
+	.modal-xs {
+    width: 317px;
+}
+.modal-content {
+    -webkit-box-shadow: 0 14px 28px rgba(0,0,0,.25),0 10px 10px rgba(0,0,0,.22);
+    box-shadow: 0 14px 28px rgba(0,0,0,.25),0 10px 10px rgba(0,0,0,.22);
+}
+.modal-content, .well-lg, .well-sm {
+    border-radius: 3px;
+}
+.modal-header {
+    position: relative;
+    padding-bottom: 0;
+}
+
+
 </style>
 <!--===================== Top Panel ========================-->
 	<div class="top-panel">
@@ -69,26 +85,44 @@
 					</div>
 					<div class="col-md-6 account-details">	
 					  <?php if($this->aauth->is_loggedin()){ ?>
-					  <!-- loggedin -->
-					  <div class="my-content">
-					   <span class="mb-20">
-					     <button class="btn bg-warning">
-					     	<?=$post['file_type']; ?>
-					     </button>
-					   </span>
-					   <h4 class="my-title"><?=$post['title'];?></h4>
-									<p class="my-body">
-										<?=$post['body'];?>
-									</p>
-					  	<div class=""> 						
-							<a style="color:#fff;" class="btn btn-primary" target="_blank" href="<?=base_url().$post['full_path'];?>">Download
-							</a>
+					  <div class="payment-history" style="width: auto;">
+							<div>
+								<h6>
+								<img style="height: 15px;
+margin-right: 3px;" src="<?=img_url();?>camera_dummy.svg">
+								<?=$post['title'];?></h6>
+								<ul>
+									<li>Size: </li>
+									<li>Category:</li>
+									<li>Type</li>
+								</ul>
+							</div>
+							<div class="last">
+							    <button class="btn btn-primary" data-toggle="modal" data-target="#modal_mini" style="margin-bottom: 12px;">Download</button>
+
+								<a id="download_file" download="africa_stock_images_<?=$post['title'];?>" style="color:#fff;" class="hidden btn btn-primary" target="_blank" href="<?=base_url().$post['full_path'];?>">Download
+							</a>&nbsp;
+								<ul>
+									<li><?=$post['file_size'];?>KB</li>
+									<li>
+										<?php 
+										$cat = '';
+										foreach (post_categories($post['id']) as $key => $value) {
+											$cat .= $value->category_name. ' |';
+										} 
+										echo word_limiter($cat,1);
+										?>
+									</li>
+									<li><?=$post['file_type'];?></li>
+								</ul>
+							</div>
 						</div>
-					  </div>
+					  <!-- loggedin -->
+					  
 					  <!-- /loggeding -->
 					  <?php }else{?>
 					   <form class="my-content" onsubmit="event.preventDefault();">
-					   <h6>Create your Free Account</h6>
+					   	<h6>Create your Free Account</h6>
 						<div class="row">
 							<div class="form-group col-6">
 								<label>Email <span>*</span></label>
@@ -106,6 +140,29 @@
 							</div>
 							<div class="bottom">					
 								<button @click="checkEmail">create my account</button>
+							</div>
+						</div>
+					   </form>
+					   <!-- login -->
+					   <form class="my-content" onsubmit="event.preventDefault();">
+					   	<h6>Login</h6>
+						<div class="row">
+							<div class="form-group col-6">
+								<label>Email <span>*</span></label>
+								<input v-model="email_login" type="text">
+								<p class="help-text text-danger">
+									
+								</p>
+							</div>
+							<div class="form-group col-6">
+								<label>Password <span>*</span></label>
+								<input v-model="password_login" class="form-control" type="password">
+								<p class="help-text text-danger">
+									
+								</p>
+							</div>
+							<div class="bottom">					
+								<button @click="login">Login</button>
 							</div>
 						</div>
 					   </form>
@@ -201,9 +258,53 @@
 				</div><!--payment-history-->
 			</div>
 			<!--===================== End of Payments ========================-->
+			<!-- Mini modal -->
+	<div id="modal_mini" class="modal fade">
+		<div class="modal-dialog modal-xs">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h6 class="text-semibold">Ready to download?</h6>
+				</div>
+
+				<div class="modal-body">
+					
+					<div class="total-order">
+						<h4>Subscribe and save</h4>
+						<ul>
+							<li>
+								<p>
+								Your image will start downloading once you choose your plan.
+							</p>
+							</li>
+						</ul>
+						<form>
+							<div class="form-group">
+								<input name="month" id="month" type="radio">
+								<label for="month">10 images / month <span class="first"></span><b>10.00$</b></label>
+							</div>
+							<div class="form-group">
+								<input name="month" id="month" type="radio">
+								<label for="month">350 images / month <span class="first"></span><b>150.00$</b></label>
+							</div>
+							
+						</form>
+						<span class="hidden total">TOTAL: <b>80.00$</b></span>
+					</div>
+				</div>
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+					<button @click='realDownload' type="button" class="btn btn-primary">Buy & Download</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- /mini modal -->
 		</div>
 		<!--===================== End of Top Content ========================-->
 	</div>
+	
 <?=theme_js('plugins/vue/vue.min.js');?>
 <?=theme_js('plugins/vue/axios.min.js');?>
 <?=theme_js('plugins/vue/vue-resource.common.js');?>

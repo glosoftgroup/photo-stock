@@ -31,7 +31,7 @@
 
 <?=theme_js('plugins/forms/selects/select2.min.js');?>
 
-</script>
+
 <?=theme_js('vue-webpack/dist/build.js');?>
 
 

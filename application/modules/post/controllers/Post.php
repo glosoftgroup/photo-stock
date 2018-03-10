@@ -27,7 +27,7 @@ class Post extends MY_Controller {
 		         ->build('list', $data);
 	}
 
-	public function get_list($num=5,$start=0)
+	public function get_list($num=20,$start=0)
     {
     	$search = '';
     	$date = '';

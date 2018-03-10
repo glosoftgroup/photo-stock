@@ -18,6 +18,8 @@ export default {
         data: this.options, 
         width:'100%',
         tags: true,
+        dropdownCssClass: 'border-primary',
+        containerCssClass: 'border-primary text-primary-700',
         tokenSeparators: [",", " "],
         placeholder:'Select' })
       .val(this.value)
@@ -35,7 +37,14 @@ export default {
     },
     options: function (options) {
       // update options
-      $(this.$el).empty().select2({ data: options })
+      $(this.$el).select2({
+        data: options,
+        tags: true,
+        dropdownCssClass: 'border-success',
+        containerCssClass: 'border-success text-success-700',
+        tokenSeparators: [",", " "],
+        placeholder:'Select categories'
+      })
     }
   },
   destroyed: function () {

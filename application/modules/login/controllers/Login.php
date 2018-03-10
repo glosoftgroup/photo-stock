@@ -5,26 +5,21 @@ class Login extends MY_Controller {
 	
 
 	public function index()
-	{
-        		
-		//$this->template->set_theme('frontend');
-		
+	{        		
+		//$this->template->set_theme('frontend');		
 
 		if($this->aauth->is_loggedin() ){ 
 		   $this->aauth->allow_user(get_sessionData(),'view dashboard');
 		   redirect('admin');
 		 }		
-		$data['title'] = 'Login';      
-		//$this->aauth->create_user('babaviz.munyoki499@gmail.com','12345','paul');	
+		$data['title'] = 'Login';   		
 		
 	    $this->load->library('form_validation');
 	    $this->form_validation->set_rules('email', 'Email', 'required');
 	    $this->form_validation->set_rules('password', 'Password', 'required');
 	if ($this->form_validation->run() === FALSE)
 	{ 	    
-		$data['title'] = 'Login';		
-		//$this->load->view('login_view', $data);
-
+		$data['title'] = 'Login';
 		$this->template->title($data['title'])	 
 			 ->set_layout('login')  
 			 ->set_partial('meta', 'partials/meta.php') 

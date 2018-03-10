@@ -34,7 +34,7 @@
 			</ul>
 		</div><!--widget-footer-->
 		<div class="widget-footer last">
-			<a href="javascript:;"><img src="<?=img_url('frontend');?>/logo_light.png" alt="logo"></a>
+			<a href="javascript:;"><img src="<?=img_url('frontend');?>/logo.png" alt="logo"></a>
 			<p>There are many variations of passages of Lorem Ipsum </p>
 			<ul class="social-icon">
 				<li><a href="#"><i class="fa fa-facebook"></i></a></li>

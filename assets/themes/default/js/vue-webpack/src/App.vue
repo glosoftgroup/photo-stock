@@ -69,6 +69,7 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import VueQuillEditor from 'vue-quill-editor'
 import Select2 from "./Select"
+import select2 from 'select2'
 
 import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
@@ -77,6 +78,7 @@ import 'quill/dist/quill.bubble.css'
 Vue.use(VueQuillEditor)
 Vue.use(VueAxios, axios)
 Vue.use('vselect',Select2)
+// Vue.use(select2)
 
 export default {
   name: 'app',
@@ -186,7 +188,7 @@ export default {
         this.axios.post(self.addUrl, formData)
         .then(function(response) {
             console.log('submited');
-            // window.location.href = baseUrl+'post/';
+            window.location.href = baseUrl+'post/';
             self.alert_text = 'Data updated successfuly';
             self.snackbar = true;            
         })
@@ -214,8 +216,11 @@ export default {
                     self.post_categories.forEach(item => {
                       self.list.push(item.text);                     
                     });
+                    console.log('many cats');
                     $("#category").val(self.list).trigger("change");                     
                   }else{
+                    console.log('single cat');
+                    console.log(data.categories[0].text);
                     $("#category").val(data.categories[0].text).trigger("change");                     
                   }
                                
@@ -236,8 +241,8 @@ export default {
     }
   },
   mounted:function(){
-    this.getPost();
-    this.getCategories();    
+    this.getCategories(); 
+    this.getPost();       
   } // end on mount
 }
 </script>

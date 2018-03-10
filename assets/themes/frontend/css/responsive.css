@@ -210,7 +210,7 @@
 	==================================*/
   header {
     padding: 29px 0;
-    background-color: #0479ec;
+    /*background-color: #0479ec;*/
   }
   header > .container {
     display: none;
@@ -218,7 +218,8 @@
   header.transparent {
     padding: 0;
     height: 58px;
-    background-color: #0479ec;
+    /*background-color: #0479ec;*/
+    background-color: white;
   }
   header.transparent.active {
     height: 100%;
@@ -241,7 +242,8 @@
     transform: translateY(-50%);
   }
   header .logo-mobile img {
-    max-width: 144px;
+    /*max-width: 144px;*/
+    max-width: 51px;
   }
   .mobile-menu .logo {
     text-align: left;
@@ -304,6 +306,21 @@
     width: 33%;
     padding-left: 0;
   }
+  .tagline {
+    font-size: 26px;
+    margin-bottom: 20px;
+    line-height: 1.25;
+    padding: 12px;
+    justify-content: stretch;
+  }
+  .inherit{
+    font-size: 18px;
+  }
+  .navbar-search {
+    margin-bottom: 20px;
+    padding: 12px;
+    margin-left: 18px;
+  }
   /*=====  End of Index.html  ======*/
   /*==================================
 	=            About.html            =
@@ -362,7 +379,8 @@
     padding-left: 15px;
   }
   .choice-plan {
-    padding: 120px 0 0;
+    /*padding: 120px 0 0;*/
+    padding: 0 0 0;
   }
   .choice-plan .pricing-list li {
     width: 30%;
@@ -376,6 +394,9 @@
   }
   .user-slider .inside {
     width: 100%;
+  }
+  .p-170 {
+    margin-top: 110px;
   }
   /*=====  End of service-page.html  ======*/
   /*===========================================
