@@ -164,7 +164,7 @@ footer {
 .choice-plan {
   /*padding: 170px 0 0;*/
   padding: 0px 0 0;
-  background: #f7fbfd;
+  /*background: #f7fbfd;*/
 }
 .choice-plan h2 {
   color: #3e1d14;
@@ -359,7 +359,7 @@ header {
     line-height: inherit;
 }
 .theme-title{
-  color:#3e1d14;
+  color:#fff;
 }
 .top-panel .nav li.active a {
     color: #d58144;
@@ -431,6 +431,12 @@ ul li .load-more-btn{
 
 .mobile-menu .inside{
   background-color: #f7fbfd;
+}
+
+.caption-top{  
+  padding: 20px 20px 5px;
+  background: linear-gradient(to top,rgba(0,0,0,0) 0,rgba(0,0,0,.6) 100%);
+
 }
 
 /*.choice-plan:before {
