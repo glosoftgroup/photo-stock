@@ -439,6 +439,10 @@ ul li .load-more-btn{
 
 }
 
+header .button-header .custom-btn.login {
+    color: #000;
+}
+
 /*.choice-plan:before {
   content: "";
   position: absolute;
