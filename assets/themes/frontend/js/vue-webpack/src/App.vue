@@ -1,96 +1,186 @@
 <template>
   <div id="app">
-      <div class="row col-md-6 p-170 col-md-offset-3">
-        <div class="text-center tagline theme-title">
-          <strong>Find amazing content for your next project</strong>
-          <h4 class="inherit">Search millions of hand-picked images within the application.</h4>
+    <div class="choice-plan animatedParent">
+	      <!-- page caption -->
+        <div class="row col-md-6 p-170 col-md-offset-3">
+          <div class="text-center tagline theme-title">
+            <strong>Find amazing content for your next project</strong>
+            <h4 class="inherit">Search millions of hand-picked images within the application.</h4>
+          </div>
         </div>
-      </div>
-      
-			<!-- search -->
-      <div class="col-md-6 col-md-offset-3">		
-          <nav class="navbar navbardefault">
-              <div class="nav nav-justified navbar-nav">
-      
-                  <form class="navbarform navbar-search" role="search">
-                      <div class="input-group">
-                      
-                          <div class="input-group-btn">
-                              <button type="button" style="height: 47px;" class="btn btn-search btn-default dropdown-toggle" data-toggle="dropdown">
-                                  <!-- search icon -->
-                                  <span class="label-icon">Search</span>
-                                  <span class="caret"></span>
-                              </button>
-                              
-                          </div>
-              
-                          <input v-model="search" @keyup="inputChangeEvent" style="height: 47px;" type="text" class="form-control" placeholder="Search stock images">
-                      
-                          <div class="input-group-btn">
-                              <button @click="inputChangeEvent" type="button" style="height: 47px;" class="btn btn-search btn-default">
-                              GO
-                              </button>		                         
-                          </div>
-                      </div>  
-                  </form>   
-              
-              </div>
-          </nav>
-      </div>
-			<!-- search -->
-			<!-- results -->
-			<div class="row col-md-12">       
-				<!-- cards -->  
-        <div class="our-team animatedParent">
-        <ul v-if="$mq === 'mobile'">
-        <masonry :cols="1" :gutter="30"  >          
-         
-          <li class="animated bounceInUp delay-250 go" v-for="(item, index) in items" :key="index">
-            <a :href="baseUrl+'stock/art/'+item.id">
-            <card :data-image="item.thumbnail">
-              <span slot="header"></span>
-              <p slot="content">{{item.title}}</p>
-            </card> 
-            </a>
-          </li>                    
-        </masonry>
-        </ul>
-        <ul v-if="$mq === 'tablet'">
-        <masonry :cols="2" :gutter="30"  >          
-         
-          <li class="animated bounceInUp delay-250 go" v-for="(item, index) in items" :key="index">
-            <a :href="baseUrl+'stock/art/'+item.id">
-            <card :data-image="item.thumbnail">
-              <span slot="header"></span>
-              <p slot="content">{{item.title}}</p>
-            </card> 
-            </a>
-          </li>                    
-        </masonry>
-        </ul>
-        <ul v-else>
-        <masonry :cols="5" :gutter="30"  >          
-         
-          <li class="animated bounceInUp delay-250 go" v-for="(item, index) in items" :key="index">
-            <a :href="baseUrl+'stock/art/'+item.id">
-            <card :data-image="item.thumbnail">
-              <span slot="header"></span>
-              <p slot="content">{{item.title}}</p>
-            </card> 
-            </a>
-          </li>                    
-        </masonry>
-        </ul>
+        
+        <!-- search -->
+        <div class="col-md-6 col-md-offset-3">		
+            <nav class="navbar navbardefault">
+                <div class="nav nav-justified navbar-nav">
+        
+                    <form class="navbarform navbar-search" role="search">
+                        <div class="input-group">
+                        
+                            <div class="input-group-btn">
+                                <button type="button" style="height: 47px;" class="btn btn-search btn-default dropdown-toggle" data-toggle="dropdown">
+                                    <!-- search icon -->
+                                    <span class="label-icon">Search</span>
+                                    <span class="caret"></span>
+                                </button>
+                                
+                            </div>
+                
+                            <input v-model="search" @focus="clearCategory" @keyup="inputChangeEvent" style="height: 47px;" type="text" class="form-control" placeholder="Search stock images">
+                        
+                            <div class="input-group-btn">
+                                <button @click="inputChangeEvent" type="button" style="height: 47px;" class="btn btn-search btn-default">
+                                GO
+                                </button>		                         
+                            </div>
+                        </div>  
+                    </form>   
+                
+                </div>
+            </nav>
         </div>
-        <!-- ./cards -->
+        <!-- search -->
+    </div>
+    <div class="choice-plan2 animatedParent">
+        <!-- categories tabs -->
+        <div class="col-md-12" v-if="$mq != 'mobile'" >
+          <ul class="text-center list-cat-btn">
+            <li class="list-item-cat" v-for="(cat, index) in categories" :key="index">
+              <a href="javascript:;" @click="setCategory(cat.id)" class="load-more-btn">{{cat.text}}</a>
+            </li>
+          </ul> 
+        </div>               
+        <!-- ./categories tabs -->
+        <!-- results -->
+        <div class="row col-md-12">       
+          <!-- cards -->  
+          <div class="our-team animatedParent">
+          <ul v-if="$mq === 'mobile'">
+          <masonry :cols="1" :gutter="30"  >          
+          
+            <li class="animated bounceInUp delay-250 go" v-for="(item, index) in items" :key="index">
+              <a :href="baseUrl+'stock/art/'+item.post_id">
+              <card :data-image="item.thumbnail">
+                <span slot="header"></span>
+                <p slot="content">{{item.title}}</p>
+              </card> 
+              </a>
+            </li>                    
+          </masonry>
+          </ul>
+          <ul v-if="$mq === 'tablet'">
+          <masonry :cols="2" :gutter="30"  >          
+          
+            <li class="animated bounceInUp delay-250 go" v-for="(item, index) in items" :key="index">
+              <a :href="baseUrl+'stock/art/'+item.post_id">
+              <card :data-image="item.thumbnail">
+                <span slot="header"></span>
+                <p slot="content">{{item.title}}</p>
+              </card> 
+              </a>
+            </li>                    
+          </masonry>
+          </ul>
+          <ul v-if="$mq=='desktop'">
+          <masonry :cols="5" :gutter="30"  >          
+          
+            <li class="animated bounceInUp delay-250 go" v-for="(item, index) in items" :key="index">
+              <a :href="baseUrl+'stock/art/'+item.post_id">
+              <card :data-image="item.thumbnail">
+                <span slot="header"></span>
+                <p slot="content">{{item.title}}</p>
+              </card> 
+              </a>
+            </li>                    
+          </masonry>
+          </ul>
+           <ul v-if="$mq=='laptop'">
+          <masonry :cols="5" :gutter="30"  >          
+          
+            <li class="animated bounceInUp delay-250 go" v-for="(item, index) in items" :key="index">
+              <a :href="baseUrl+'stock/art/'+item.post_id">
+              <card :data-image="item.thumbnail">
+                <span slot="header"></span>
+                <p slot="content">{{item.title}}</p>
+              </card> 
+              </a>
+            </li>                    
+          </masonry>
+          </ul>
+          </div>
+          <!-- ./cards -->
 
-			</div>
-      <div class="col-md-12 text-center row" v-show="show_loader">
-        <button @click="loadMore" class="load-more-btn">
-          {{loader}}
-        </button>
+        </div>
+        <div class="col-md-12 text-center row" v-show="show_loader">
+          <button @click="loadMore" class="load-more-btn">
+            {{loader}}
+          </button>
+        </div>
+        <!-- /results -->
+	   
+    </div>
+    <!-- /choice plan -->
+    <!-- categories card -->
+    <div class="container small">
+      <div class="our-team animatedParent">
+      <h4 class="title-head theme-title" style="padding:12px;color:#e15126;">Be inspired by our curated collections</h4>
+      <ul>
+        <li class="animated bounceInUp delay-250 go">
+          <img :src="imgUrl+'team-img.png'" alt="team-img">
+          <div class="inside">
+            <a href="#" class="name">The Arts</a>
+            <span></span>
+          </div><!--inside-->
+        </li>
+        <li class="animated bounceInUp delay-550 go">
+          <img :src="imgUrl+'team-img.png'" alt="team-img">
+          <div class="inside">
+            <a href="#" class="name">Beauty/Fashion</a>
+          </div><!--inside-->
+        </li>
+        <li @click="setCategory(18)" class="animated bounceInUp delay-750 go">
+          <img :src="imgUrl+'team-img.png'" alt="team-img">
+          <div class="inside">
+            <a href="#" class="name">Nature</a>
+          </div><!--inside-->
+        </li>
+        <li class="animated bounceInUp delay-1000 go">
+          <img :src="imgUrl+'team-img.png'" alt="team-img">
+          <div class="inside">
+            <a href="#" class="name">Cultural</a>
+          </div><!--inside-->
+        </li>
+      </ul>
+      <ul>
+        <li class="animated bounceInUp delay-1000 go">
+          <img :src="imgUrl+'team-img.png'" alt="team-img">
+          <div class="inside">
+            <a href="#" class="name">Educational</a>
+            <span></span>
+          </div><!--inside-->
+        </li>
+        <li class="animated bounceInUp delay-1250 go">
+          <img :src="imgUrl+'team-img.png'" alt="team-img">
+          <div class="inside">
+            <a href="#" class="name">Food and Drinks</a>
+          </div><!--inside-->
+        </li>
+        <li class="animated bounceInUp delay-1500 go">
+          <img :src="imgUrl+'team-img.png'" alt="team-img">
+          <div class="inside">
+            <a href="#" class="name">Business/Finance</a>
+          </div><!--inside-->
+        </li>
+        <li class="animated bounceInUp delay-1750 go">
+          <img :src="imgUrl+'team-img.png'" alt="team-img">
+          <div class="inside">
+            <a href="#" class="name">Building/Landmarks</a>
+          </div><!--inside-->
+        </li>
+      </ul>
       </div>
-			<!-- results -->
+    </div>
+    <!-- ./cards -->
   </div>
 </template>
 
@@ -126,7 +216,6 @@ Vue.component('card', {
     </span>`,
   mounted() {
     this.width = this.$refs.card.offsetWidth;
-    // console.log(this.width)
     this.height = this.$refs.card.offsetHeight;
   },
   props: ['dataImage'],
@@ -188,44 +277,62 @@ export default {
       msg: 'Welcome to Photo-stock App',
       search:'',
       status:'',
+      category:'',
+      categories:[],
+      queryset:'',
       page_size:20,
       start:20,
       num:20,
       loader:'Discover more..',
-      show_loader:true,
+      show_loader:false,
       items:[],
-      baseUrl:baseUrl
+      baseUrl:baseUrl,
+      imgUrl:imgUrl
     }
   },
   methods:{
     fetchPosts(){
       var self = this;
-      this.axios.get(baseUrl+'post/get_list/20')
+      this.axios.get(baseUrl+'post/search/20')
         .then(function(data) {            
             data = data.data;
             self.items = data.results;
-            console.log('submited');                       
+             if(self.items.length > 0){
+                self.show_loader = true;
+             }                      
         })
         .catch(function(err) {
             console.log(err);
         });
     },
+    clearCategory(){
+      this.category = '';
+    },
+    setCategory(id){
+      this.category = id;
+      this.inputChangeEvent();
+    },
     inputChangeEvent:function(){
         /* make api request on events filter */
         var self = this;
-        
-        this.$http.get(baseUrl+'post/get_list/'+'?page_size='+self.page_size+'&q='+this.search+'&status='+this.status)
+        this.queryset = 'page_size='+self.page_size;
+        this.queryset += '&q='+this.search;
+        if(this.category){
+          this.queryset += '&category='+this.category;
+        }
+
+        this.$http.get(baseUrl+'post/search/?'+self.queryset)
             .then(function(data){
                 data = data.data;
                 self.items = data.results;
                 if(self.items.length > 0){
-                  this.show_loader = true;
-                }
-                // this.totalPages = precisionRound(parseFloat(data.total_pages),0);                
-                
+                  self.show_loader = true;
+                }else{
+                  self.show_loader = false;
+                }                
             }, function(error){
                 console.log(error.statusText);
-        });
+            });
     },
     loadMore(){
       var self = this;
@@ -239,22 +346,27 @@ export default {
                 self.loader = 'Load More'
                 data.forEach(item => {
                   self.items.push(item);                     
-                });
-                // self.items.push({
-                //               full_path: data[i].full_path,
-                //               title:data[i].title,
-                //               body:data[i].body,
-                //               timestamp:moment(data[i].timestamp).format('YYYY-MM-DD'),                             
-                //               id:data[i].id
-                //               });
+                });                
                }, function(error){
                 console.log(error.statusText);
         });
       self.start += self.num;
+    },
+    loadCategories(){
+      var self = this;
+      this.$http.get(baseUrl+'post/load_categories')
+            .then(function(data){
+                data = data.data;
+                console.log(data);
+                self.categories = data;        
+               }, function(error){
+                console.log(error.statusText);
+        });
     }
   },
   mounted: function(){
     this.fetchPosts();
+    this.loadCategories();
   }
 }
 </script>
@@ -414,14 +526,11 @@ h1+p, p+p {
   border-radius: 5px;
   margin: 0;
   background-color: #e15126;
-  transition: 0.6s 1.6s cubic-bezier(0.215, 0.61, 0.355, 1);
-  transition: 5s 1s $returnEasing;
+  transition: 0.5s 0.6s cubic-bezier(0.215, 0.61, 0.355, 1);
+  // transition: 5s 1s $returnEasing;
   border: 1px solid transparent;
 }
 
-.btn .load-more-btn:focus{
-  color: #fdfeff;
-}
 
 .our-team{
   margin-bottom:0px;
