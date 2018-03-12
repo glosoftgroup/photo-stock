@@ -7,8 +7,7 @@
             <strong>Find amazing content for your next project</strong>
             <h4 class="inherit">Search millions of hand-picked images within the application.</h4>
           </div>
-        </div>
-        
+        </div>        
         <!-- search -->
         <div class="col-md-6 col-md-offset-3">		
             <nav class="navbar navbardefault">

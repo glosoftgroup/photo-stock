@@ -7,7 +7,10 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">	
 	<?php if(!isset($template['title'])){$title=siteinfo('name');}else{ $title = $template['title'];}?>
   <title><?=$title.' - '.siteinfo('name')?></title>
-	<script>var baseUrl = "<?=base_url();?>";</script>
+	<script> 
+	var baseUrl = "<?=base_url();?>";
+	var imgUrl = "<?=img_url('frontend');?>";
+	</script>
 
 	<!-- meta -->
 	<?php echo $template['partials']['meta']; ?>

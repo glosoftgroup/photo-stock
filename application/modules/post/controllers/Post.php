@@ -63,6 +63,43 @@ class Post extends MY_Controller {
         echo json_encode($data['logs']);
     }
 
+    public function search($num=20,$start=0,$category_id=FALSE)
+    {
+    	$search = '';
+    	$date = '';
+    	$category = '';
+
+    	if(isset($_GET['page_size'])){
+    		$num = $_GET['page_size'];
+    	}
+    	if(isset($_GET['q'])){
+    		$search = trim($_GET['q']);
+    	}
+    	if(isset($_GET['page'])){
+    		$start = $_GET['page']-1;
+    	}
+    	if(isset($_GET['category'])){    		
+    		$category = $_GET['category'];
+    		if($category == ''){
+    			$category = False;
+    		}
+    	}
+
+        $data['logs']['results'] = $this->aauth_post_model->get_posts_per_category($num,
+        	$start, $search, $category);
+        $data['logs']['total'] = $this->aauth_post_model-> get_posts_total($num, $start, $search, $category); //sizeof($data['logs']['results']);
+        if(sizeof($data['logs']['results']) > 0){
+        	$data['logs']['total_pages'] = $data['logs']['total']/$num;
+        	if($data['logs']['total_pages'] <=0){
+        		$data['logs']['total_pages'] = 1;
+        	}
+        }else{
+        	$data['logs']['total_pages'] = 1;
+        }
+        
+        echo json_encode($data['logs']);
+    }
+
     public function load_more($num=5,$start=0)
     {
     	$search = '';
@@ -80,6 +117,22 @@ class Post extends MY_Controller {
 		foreach ($categories as $key => $value) {
 			# format keys
 			$results[$key]['id'] = $value->name;
+			$results[$key]['text'] = $value->name;
+		}
+		echo json_encode($results);
+		
+	}
+
+	public function load_categories(){
+		$categories = $this->aauth_post_model->get_category_have_post(20);
+		
+		// echo '<pre>';
+		// print_r($categories);
+		// echo '</pre>';
+		$results = array();
+		foreach ($categories as $key => $value) {
+			# format keys
+			$results[$key]['id'] = $value->id;
 			$results[$key]['text'] = $value->name;
 		}
 		echo json_encode($results);
