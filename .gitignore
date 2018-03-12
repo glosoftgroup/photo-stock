@@ -33,3 +33,4 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 uploads/*
 /assets/themes/default/js/vue-webpack/node_modules/
 /assets/themes/frontend/js/vue-webpack/node_modules/
+vue-webpack/node_modules/

@@ -14,5 +14,5 @@ header{
 </style>
 <div id="app"></div>
 
-<?=theme_js('vue-webpack/dist/build.js','frontend');?>
+<?=theme_js('frontend.bundle.js');?>
 
