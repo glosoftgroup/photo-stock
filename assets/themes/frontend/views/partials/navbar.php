@@ -38,7 +38,7 @@
 		</div>
 	</div>
 	<div class="mobile-block">
-		<div class="logo-mobile"><a href="javascript:;"><img src="<?=img_url('frontend');?>/logo.png" alt="logo"></a></div>
+		<div class="logo-mobile"><a href="<?=base_url();?>"><img src="<?=img_url('frontend');?>/logo.png" alt="logo"></a></div>
 		<a href="#" class="mobile-menu-btn"><span></span></a>
 		<div class="mobile-menu">
 			<div class="inside">
@@ -46,7 +46,7 @@
 					<a href="javascript:;"><img src="<?=img_url('frontend');?>/logo.png" alt="logo"></a>
 				</div><!--logo-->
 				<ul class="menu panel-group" id="accordion" aria-multiselectable="true">
-					<li><a href="javascript:;">Home</a></li>
+					<li><a href="<?=base_url();?>">Home</a></li>
 					<li><a href="javascript:;">About Us</a></li>
 					
 					<li class="children panel">
