@@ -1,7 +1,14 @@
+<style type="text/css">
+	.navbar-brand > img {
+    margin-top: -6px;
+    height: 34px;
+}
+</style>
+
 <!-- Main navbar -->
-<div class="navbar navbar-inverse bg-indigo">
+<div class="navbar navbar-default">
 	<div class="navbar-header">
-		<a class="navbar-brand" href="index.html"><img src="assets/images/logo_light.png" alt=""></a>
+		<a class="navbar-brand" href="<?=base_url();?>"><img src="<?=img_url('frontend');?>logo_default.png" alt="Logo"></a>
 
 		<ul class="nav navbar-nav visible-xs-block">
 			<li><a data-toggle="collapse" data-target="#navbar-mobile"><i class="icon-tree5"></i></a></li>

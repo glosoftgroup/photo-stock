@@ -363,7 +363,6 @@ export default {
         }        
         var url = baseUrl+'post/get_list/?';
         if(category_flag==1){
-          console.log('cat is set to'+category_flag)
           var url = baseUrl+'post/search/?';
         }        
 
