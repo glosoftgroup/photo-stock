@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Mar 10, 2018 at 06:57 AM
+-- Generation Time: Mar 11, 2018 at 11:31 PM
 -- Server version: 5.7.20
 -- PHP Version: 7.0.26
 
@@ -244,30 +244,12 @@ CREATE TABLE `aauth_taxonomy_metas` (
 --
 
 INSERT INTO `aauth_taxonomy_metas` (`id`, `post_id`, `category_id`, `category_name`, `type`) VALUES
-(16, 80, 2, 'christian', ''),
-(17, 80, 3, 'muslim', ''),
-(22, 81, 9, 'Art', ''),
-(23, 81, 15, 'Love', ''),
-(24, 76, 19, 'Nature', ''),
-(25, 82, 8, 'Pattern', ''),
-(26, 83, 2, 'Religion', ''),
-(27, 83, 4, 'Miscellaneous', ''),
-(28, 83, 5, 'Abstract', ''),
-(29, 83, 6, 'Backgrounds/Textures', ''),
-(30, 83, 7, '3D', ''),
-(31, 83, 9, 'Art', ''),
-(32, 83, 11, 'Flower', ''),
-(33, 84, 16, 'Cultural', ''),
-(34, 85, 16, 'Cultural', ''),
-(35, 86, 2, 'Religion', ''),
-(36, 87, 19, 'Nature', ''),
-(37, 88, 18, 'People', ''),
-(38, 89, 18, 'People', ''),
-(39, 90, 21, 'Animals/Wildlife', ''),
-(40, 91, 21, 'Animals/Wildlife', ''),
-(41, 92, 21, 'Animals/Wildlife', ''),
-(42, 93, 19, 'Nature', ''),
-(43, 94, 12, 'Food', '');
+(44, 94, 12, 'Food', ''),
+(45, 93, 19, 'Nature', ''),
+(48, 91, 19, 'Nature', ''),
+(49, 91, 21, 'Animals/Wildlife', ''),
+(50, 92, 4, 'Miscellaneous', ''),
+(51, 89, 4, 'Miscellaneous', '');
 
 -- --------------------------------------------------------
 
@@ -303,7 +285,7 @@ CREATE TABLE `aauth_users` (
 --
 
 INSERT INTO `aauth_users` (`id`, `email`, `pass`, `username`, `banned`, `last_login`, `last_activity`, `date_created`, `forgot_exp`, `remember_time`, `remember_exp`, `verification_code`, `totp_secret`, `ip_address`, `fullname`, `address`, `city`, `country`, `postal_code`, `phone`) VALUES
-(1, 'admin@example.com', 'dd5073c93fb477a167fd69072e95455834acd93df8fed41a2c468c45b394bfe3', 'Admin', 0, '2018-03-10 03:36:47', '2018-03-10 03:36:47', NULL, NULL, '2018-03-13 00:00:00', 'mRlj1T5pX3MzuDCE', NULL, NULL, '127.0.0.1', '', '', '', '', '', ''),
+(1, 'admin@example.com', 'dd5073c93fb477a167fd69072e95455834acd93df8fed41a2c468c45b394bfe3', 'Admin', 0, '2018-03-10 19:46:02', '2018-03-10 19:46:02', NULL, NULL, '2018-03-13 00:00:00', 'kSDLWIB9yz08hQJ5', NULL, NULL, '127.0.0.1', '', '', '', '', '', ''),
 (2, 'admin2@example.com', 'b778efd029a720b8d2121d2714d693ec68e614cb3c913de71e249774ed6a8aaf', 'admin2examplecom', 0, '2018-03-07 04:00:20', '2018-03-07 04:00:20', '2018-03-07 04:00:20', NULL, NULL, NULL, NULL, NULL, '127.0.0.1', '', '', '', '', '', ''),
 (3, 'admin3@example.com', 'c5c0b6b20e10c41552499077c813362080f9ecb62e884d85164fa0e5a061e6c9', 'admin3examplecom', 0, '2018-03-07 21:19:35', '2018-03-07 21:19:36', '2018-03-07 21:19:35', NULL, NULL, NULL, NULL, NULL, '127.0.0.1', '', '', '', '', '', '');
 
@@ -410,7 +392,8 @@ ALTER TABLE `aauth_site_info`
 -- Indexes for table `aauth_taxonomy_metas`
 --
 ALTER TABLE `aauth_taxonomy_metas`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `post_id` (`post_id`);
 
 --
 -- Indexes for table `aauth_users`
@@ -451,7 +434,7 @@ ALTER TABLE `aauth_groups`
 -- AUTO_INCREMENT for table `aauth_login_attempts`
 --
 ALTER TABLE `aauth_login_attempts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `aauth_perms`
@@ -481,7 +464,7 @@ ALTER TABLE `aauth_site_info`
 -- AUTO_INCREMENT for table `aauth_taxonomy_metas`
 --
 ALTER TABLE `aauth_taxonomy_metas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- AUTO_INCREMENT for table `aauth_users`
@@ -494,6 +477,16 @@ ALTER TABLE `aauth_users`
 --
 ALTER TABLE `aauth_user_variables`
   MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `aauth_taxonomy_metas`
+--
+ALTER TABLE `aauth_taxonomy_metas`
+  ADD CONSTRAINT `aauth_taxonomy_metas_ibfk_1` FOREIGN KEY (`post_id`) REFERENCES `aauth_posts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

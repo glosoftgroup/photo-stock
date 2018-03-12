@@ -2,12 +2,14 @@
   <div id="app">
     <div class="choice-plan animatedParent">
 	      <!-- page caption -->
-        <div class="row col-md-6 p-170 col-md-offset-3">
-          <div class="text-center tagline theme-title">
-            <strong>Find amazing content for your next project</strong>
-            <h4 class="inherit">Search millions of hand-picked images within the application.</h4>
-          </div>
-        </div>        
+        <div class="">
+          <div class="caption-top">
+            <div class="text-center tagline theme-title" style="padding: 42px 20px 5px;">
+              <strong>Find amazing content for your next project</strong>
+              <h4 class="caption-subtitle">Search millions of hand-picked images within the application.</h4>
+            </div>
+          </div>  
+        </div>      
         <!-- search -->
         <div class="col-md-6 col-md-offset-3">		
             <nav class="navbar navbardefault">
@@ -543,6 +545,13 @@ h1+p, p+p {
     outline: 0;
     -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
     box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(233, 153, 102, 0.6);
+}
+
+.theme-title .caption-subtitle
+{
+  font-size: 20px;
+  padding: 11px 6px 3px;
+  line-height: 1.4;
 }
 
 </style>
