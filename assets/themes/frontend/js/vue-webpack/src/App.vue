@@ -60,12 +60,22 @@
           <masonry :cols="1" :gutter="30"  >          
           
             <li class="animated bounceInUp delay-250 go" v-for="(item, index) in items" :key="index">
-              <a :href="baseUrl+'stock/art/'+item.post_id">
-              <card :data-image="item.thumbnail">
-                <span slot="header"></span>
-                <p slot="content">{{item.title}}</p>
-              </card> 
-              </a>
+              <span v-if="item.post_id & item.post_id != 'null'">
+                <a :href="baseUrl+'stock/art/'+item.post_id">
+                 <card :data-image="item.thumbnail">
+                    <span slot="header"></span>
+                    <p slot="content">{{item.title}}</p>
+                 </card> 
+                </a>
+              </span>
+              <span v-else>
+                <a :href="baseUrl+'stock/art/'+item.id">
+                 <card :data-image="item.thumbnail">
+                    <span slot="header"></span>
+                    <p slot="content">{{item.title}}</p>
+                 </card> 
+                </a>
+              </span> 
             </li>                    
           </masonry>
           </ul>
@@ -73,12 +83,22 @@
           <masonry :cols="2" :gutter="30"  >          
           
             <li class="animated bounceInUp delay-250 go" v-for="(item, index) in items" :key="index">
-              <a :href="baseUrl+'stock/art/'+item.post_id">
-              <card :data-image="item.thumbnail">
-                <span slot="header"></span>
-                <p slot="content">{{item.title}}</p>
-              </card> 
-              </a>
+             <span v-if="item.post_id & item.post_id != 'null'">
+                <a :href="baseUrl+'stock/art/'+item.post_id">
+                 <card :data-image="item.thumbnail">
+                    <span slot="header"></span>
+                    <p slot="content">{{item.title}}</p>
+                 </card> 
+                </a>
+              </span>
+              <span v-else>
+                <a :href="baseUrl+'stock/art/'+item.id">
+                 <card :data-image="item.thumbnail">
+                    <span slot="header"></span>
+                    <p slot="content">{{item.title}}</p>
+                 </card> 
+                </a>
+              </span> 
             </li>                    
           </masonry>
           </ul>
@@ -86,12 +106,22 @@
           <masonry :cols="5" :gutter="30"  >          
           
             <li class="animated bounceInUp delay-250 go" v-for="(item, index) in items" :key="index">
-              <a :href="baseUrl+'stock/art/'+item.post_id">
-              <card :data-image="item.thumbnail">
-                <span slot="header"></span>
-                <p slot="content">{{item.title}}</p>
-              </card> 
-              </a>
+              <span v-if="item.post_id & item.post_id != 'null'">
+                <a :href="baseUrl+'stock/art/'+item.post_id">
+                 <card :data-image="item.thumbnail">
+                    <span slot="header"></span>
+                    <p slot="content">{{item.title}}</p>
+                 </card> 
+                </a>
+              </span>
+              <span v-else>
+                <a :href="baseUrl+'stock/art/'+item.id">
+                 <card :data-image="item.thumbnail">
+                    <span slot="header"></span>
+                    <p slot="content">{{item.title}}</p>
+                 </card> 
+                </a>
+              </span>              
             </li>                    
           </masonry>
           </ul>
@@ -99,12 +129,22 @@
           <masonry :cols="5" :gutter="30"  >          
           
             <li class="animated bounceInUp delay-250 go" v-for="(item, index) in items" :key="index">
-              <a :href="baseUrl+'stock/art/'+item.post_id">
-              <card :data-image="item.thumbnail">
-                <span slot="header"></span>
-                <p slot="content">{{item.title}}</p>
-              </card> 
-              </a>
+              <span v-if="item.post_id & item.post_id != 'null'">
+                <a :href="baseUrl+'stock/art/'+item.post_id">
+                 <card :data-image="item.thumbnail">
+                    <span slot="header"></span>
+                    <p slot="content">{{item.title}}</p>
+                 </card> 
+                </a>
+              </span>
+              <span v-else>
+                <a :href="baseUrl+'stock/art/'+item.id">
+                 <card :data-image="item.thumbnail">
+                    <span slot="header"></span>
+                    <p slot="content">{{item.title}}</p>
+                 </card> 
+                </a>
+              </span> 
             </li>                    
           </masonry>
           </ul>
@@ -294,7 +334,7 @@ export default {
   methods:{
     fetchPosts(){
       var self = this;
-      this.axios.get(baseUrl+'post/search/20')
+      this.axios.get(baseUrl+'post/get_list/20')
         .then(function(data) {            
             data = data.data;
             self.items = data.results;
@@ -311,18 +351,23 @@ export default {
     },
     setCategory(id){
       this.category = id;
-      this.inputChangeEvent();
+      this.inputChangeEvent(1);
     },
-    inputChangeEvent:function(){
+    inputChangeEvent:function(category_flag=''){
         /* make api request on events filter */
         var self = this;
         this.queryset = 'page_size='+self.page_size;
         this.queryset += '&q='+this.search;
         if(this.category){
           this.queryset += '&category='+this.category;
-        }
+        }        
+        var url = baseUrl+'post/get_list/?';
+        if(category_flag==1){
+          console.log('cat is set to'+category_flag)
+          var url = baseUrl+'post/search/?';
+        }        
 
-        this.$http.get(baseUrl+'post/search/?'+self.queryset)
+        this.$http.get(url+self.queryset)
             .then(function(data){
                 data = data.data;
                 self.items = data.results;
