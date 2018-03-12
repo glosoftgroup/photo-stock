@@ -396,7 +396,7 @@
     width: 100%;
   }
   .p-170 {
-    margin-top: 110px;
+    margin-top: 30px;
   }
   /*=====  End of service-page.html  ======*/
   /*===========================================
@@ -491,7 +491,7 @@
 	=            Index.html            =
 	==================================*/
   header {
-    margin-bottom: 60px;
+    margin-bottom: 0px;
   }
   .base-slider .custom-btn {
     font-size: 12px;
@@ -644,7 +644,7 @@
     width: auto;
   }
   .choice-plan {
-    margin-bottom: 60px;
+    margin-bottom: 0px;
   }
   .choice-plan h2 {
     font-size: 32px;

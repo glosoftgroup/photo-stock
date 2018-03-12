@@ -10,7 +10,7 @@ class Home extends MY_Controller
 
 	public function index()
 	{
-		$this->data['custom_css'] = 'transparent';
+		$this->data['custom_css'] = 'transparentxx';
 		$partials = array(	
 			'navbar' => 'partials/navbar.php',
 			'meta' => 'partials/meta.php',

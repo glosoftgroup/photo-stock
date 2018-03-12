@@ -203,6 +203,26 @@ footer {
   position: absolute;
   top: -70px;
 }
+
+header {
+    padding: 0px 0;
+    margin-bottom: 0px;
+    position: relative;
+    background-color: #fff;
+}
+
+/*.choice-plan::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: inherit;
+ 
+  -webkit-filter: blur(12px);
+  filter: blur(12px);
+}*/
 /* 03. About
    ==================================== */
 .breadcrumbs {
@@ -358,7 +378,7 @@ strong{
 }
 
 .p-170{
-  margin-top: 170px;
+  margin-top: 80px;
 }
 
 .btn-primary{
@@ -372,6 +392,46 @@ strong{
     border-color: #d58144;
 }
 
+ul li .load-more-btn{
+  background: #fff;
+  color: #e15126;
+  border-radius: 5px;
+  -webkit-box-shadow: 0 2px 10px 0 rgba(0,0,0,.05);
+  box-shadow: 0 2px 10px 0 rgba(0,0,0,.05);
+  display: inline-block;
+  font-size: 16px;
+  font-weight: 500;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+}
+
+.list-cat-btn .load-more-btn:hover{
+  /*background: ;*/
+  box-shadow: 0 2px 10px 0 #e151264d;
+  line-height: 18px;
+}
+
+.list-cat-btn{
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.list-item-cat{
+  margin: 0 15px 15px 0;
+  padding: 0;
+}
+
+.choice-plan2{
+  margin-top: 12px;
+}
+
+.mobile-menu .inside{
+  background-color: #f7fbfd;
+}
 
 /*.choice-plan:before {
   content: "";

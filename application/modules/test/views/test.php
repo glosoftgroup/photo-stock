@@ -1,7 +1,10 @@
 <?php $this->load->model('Aauth_post_model');
 
-$post_toxi = $this->Aauth_post_model->get_posts_per_category(9);
-echo json_encode($post_toxi);
+$categories = $this->aauth_post_model->get_category_have_post(20);
+		
+		echo '<pre>';
+		print_r($categories);
+		echo '</pre>';
 echo $this->db->last_query();
 
 ?>

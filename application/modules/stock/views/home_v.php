@@ -100,7 +100,7 @@ margin-right: 3px;" src="<?=img_url();?>camera_dummy.svg">
 							<div class="last">
 							    <button class="btn btn-primary" data-toggle="modal" data-target="#modal_mini" style="margin-bottom: 12px;">Download</button>
 
-								<a id="download_file" download="africa_stock_images_<?=$post['title'];?>" style="color:#fff;" class="hidden btn btn-primary" target="_blank" href="<?=base_url().$post['full_path'];?>">Download
+								<a id="download_file" download="africa_stock_images_<?=$post['title'].$post['file_name'];?>" style="color:#fff;" class="hidden btn btn-primary" target="_blank" href="<?=base_url().$post['full_path'];?>">Download
 							</a>&nbsp;
 								<ul>
 									<li><?=$post['file_size'];?>KB</li>
