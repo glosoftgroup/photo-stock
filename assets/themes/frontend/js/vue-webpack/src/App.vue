@@ -103,10 +103,10 @@
           </masonry>
           </ul>
           <ul v-if="$mq=='desktop'">
-          <masonry :cols="5" :gutter="30"  >          
+          <masonry :cols="5" :gutter="30">         
           
             <li class="animated bounceInUp delay-250 go" v-for="(item, index) in items" :key="index">
-              <span v-if="item.post_id & item.post_id != 'null'">
+              <span v-if="item.post_id">
                 <a :href="baseUrl+'stock/art/'+item.post_id">
                  <card :data-image="item.thumbnail">
                     <span slot="header"></span>
@@ -327,6 +327,7 @@ export default {
       loader:'Discover more..',
       show_loader:false,
       items:[],
+      post_id:false,
       baseUrl:baseUrl,
       imgUrl:imgUrl
     }
@@ -362,8 +363,10 @@ export default {
           this.queryset += '&category='+this.category;
         }        
         var url = baseUrl+'post/get_list/?';
+        self.post_id = false;
         if(category_flag==1){
-          var url = baseUrl+'post/search/?';
+          url = baseUrl+'post/search/?';
+          self.post_id = true;
         }        
 
         this.$http.get(url+self.queryset)
