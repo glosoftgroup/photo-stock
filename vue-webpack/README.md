@@ -1,6 +1,8 @@
-# vue-webpack
 
-> A Vue.js project
+# stock-webpack
+
+> stock-webpack project
+
 
 ## Build Setup
 
