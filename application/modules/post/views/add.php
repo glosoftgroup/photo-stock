@@ -32,7 +32,7 @@
 <?=theme_js('plugins/forms/selects/select2.min.js');?>
 
 
-<?=theme_js('vue-webpack/dist/build.js');?>
+<?=theme_js('backend.bundle.js');?>
 
 
 
