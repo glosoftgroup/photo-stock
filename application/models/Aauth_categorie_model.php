@@ -6,15 +6,11 @@ class Aauth_categorie_model extends MY_Model
         $this->db->select();
        
         if ($search) {
-            $this->db->like('title', $search);
-        }
-
-        if($date){
-            $this->db->like('timestamp', $date);
-        }
+            $this->db->like('name', $search);
+        }        
         
         $start *= $num;
-        $q = $this->db->from('aauth_posts')
+        $q = $this->db->from('aauth_categories')
                       ->limit($num, $start)
                       ->order_by('id', 'DESC')->get();
         $results = array();
@@ -31,15 +27,12 @@ class Aauth_categorie_model extends MY_Model
         $this->db->select();
        
         if ($search) {
-            $this->db->like('title', $search);
-        }
-
-        if ($date) {
-            $this->db->like('timestamp', $date);
+            $this->db->like('name', $search);
         }
         
+        
         $start *= $num;
-        $q = $this->db->from('aauth_posts')
+        $q = $this->db->from('aauth_categories')
                       //->limit($num, $start)
                       ->order_by('id', 'DESC')->get();
         return $q->num_rows();

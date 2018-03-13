@@ -4,6 +4,7 @@ var webpack = require('webpack')
 module.exports = {
   entry: {
     'frontend':'./frontend/src/main.js',
+    'category':'./category/src/main.js',
     'backend': './backend/src/main.js'
   },
   output: {

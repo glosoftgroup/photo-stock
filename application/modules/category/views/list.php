@@ -94,12 +94,8 @@
         <div class="">
           <table class="table table-sm room-striped room-hover dataroom-header-footer" style="border-bottom:1px solid #ddd;">
                 <thead>
-                  <tr class="bg-primary">
-                    <th>Preview</th>
-                    <th>Title</th>
-                    <th>Categories</th>
-                    <th>Date</th>
-                    <th>File info</th>
+                  <tr class="bg-primary">                    
+                    <th>Name</th>                   
                     <th>Actions</th>
                   </tr>
                 </thead>
@@ -123,32 +119,10 @@
                 <!--listing template-->
                 <template v-for="item in items">
                     <tr class="td" :id="item.id">
+                        
                         <td>
-                            <span v-if="item.full_path">
-                              <a :href="base_url+item.full_path" data-popup="lightbox">
-                                <img width="120px" :src="base_url+item.full_path" alt="Image">
-                              </a>
-                            </span>
-                            <span v-else>
-                                <img width="50" height="50" src="{% static 'images/users/default-avatar.png' %}" alt="Image">
-                            </span>
-                        </td>
-                        <td>
-                            ${item.title} 
-                        </td>
-                        <td>
-                          <span v-for="cat in item.categories">
-                            <span class="label label-primary" style="margin-right: 5px;">
-                            &nbsp;${cat.category_name}&nbsp;
-                            </span>
-                          </span>
-                        </td>
-                        <td>
-                          ${item.timestamp}
-                        </td>
-                        <td>
-                          ${item.file_size} ${item.file_size}
-                        </td>
+                            ${item.name} 
+                        </td>                        
                         
 
                         <td class="text-center">
@@ -158,8 +132,8 @@
                                         Actions<span class="caret"></span></button>
 
                                     <ul class="dropdown-menu-xs dropdown-menu">
-                                        <li><a @click="goTo(item.id)" href="javascript:;"><i class="icon-pencil"></i> Edit</a></li>
-                                        <li><a @click="deleteInstance(item.id)" href="javascript:;"><i class=" icon-trash-alt"></i> Delete</a></li>
+                                        <li><a @click="goTo('<?=base_url();?>category/add/'+item.id,item.id)" href="javascript:;"><i class="icon-pencil"></i> Edit</a></li>
+                                        <li><a @click="deleteInstance('<?=base_url();?>category/destroy_instance/',item.id)" href="javascript:;"><i class=" icon-trash-alt"></i> Delete</a></li>
                                     </ul>
                                 </li>
                             </ul>
@@ -229,7 +203,7 @@
 
                 <div class="modal-footer text-center">
                     <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
-                    <button @click="deleteInstance(false)" type="button" class="btn btn-danger animated shake">Delete</button>
+                    <button @click="deleteInstance('<?=base_url();?>category/destroy_instance/',false)" type="button" class="btn btn-danger animated shake">Delete</button>
                 </div>
             </div>
         </div>

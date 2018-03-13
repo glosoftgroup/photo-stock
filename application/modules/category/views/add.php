@@ -18,21 +18,21 @@
 </div>
 <script type="text/javascript">
 	var pk = false;
-	var uploadUrl = baseUrl+'post/upload_file';
-	var addUrl = baseUrl+'post/add';
+	var uploadUrl = baseUrl+'category/upload_file';
+	var addUrl = baseUrl+'category/add';
 </script>
 <?php if(isset($pk)){ ?>
 <script type="text/javascript">
 	var pk = "<?=$pk;?>";
-	uploadUrl = baseUrl+'post/upload_file/'+pk+'/';
-	addUrl = baseUrl+'post/add/'+pk+'/';
+	uploadUrl = baseUrl+'category/upload_file/'+pk+'/';
+	addUrl = baseUrl+'category/add/'+pk+'/';
 </script>
 <?php } ?>
 
 <?=theme_js('plugins/forms/selects/select2.min.js');?>
 
 
-<?=theme_js('backend.build.js');?>
+<?=theme_js('category.bundle.js');?>
 
 
 

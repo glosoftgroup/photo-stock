@@ -90,10 +90,10 @@ var parent = new Vue({
         showMore: function(id,text){
             $('#'+id).html(text);
         },
-        goTo: function(url){
-            window.location.href = baseUrl+'post/add/'+url;
+        goTo: function(url,id){
+            window.location.href = url;
         },
-        deleteInstance: function(id){
+        deleteInstance: function(url,id){
             // open delete modal and set delete url
             // ___________________
             // var deleteUrl = this.deleteUrl;
@@ -109,7 +109,7 @@ var parent = new Vue({
                 axios.defaults.xsrfHeaderName = "X-CSRFToken"
                 axios.defaults.xsrfCookieName = 'csrftoken'
                 
-                axios.post(baseUrl+'post/destroy_instance/'+self.deleteId)
+                axios.post(url+self.deleteId)
                 .then(function (response) {
                     alertUser('Data deleted successfully');
                     // hide modal & remove item

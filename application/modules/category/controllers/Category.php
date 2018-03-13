@@ -25,6 +25,29 @@ class Category extends MY_Controller{
 		         ->build('list', $data);
 	}
 
+    // delete cubrid_is_instance(conn_identifier, oid)
+    public function destroy_instance($edit=FALSE){
+        accessPermisson('view dashboard');
+        if($edit){
+            $delete_id = $this->aauth_categorie_model->delete($edit);
+            echo json_encode(array('message'=>$delete_id));
+        }else{
+            echo json_encode(array('message'=>'Post id required'));
+        }
+    }
+
+    // get cubrid_is_instance(conn_identifier, oid)
+    public function get($edit=FALSE){
+        accessPermisson('view dashboard');
+        if($edit){
+            $row = $this->aauth_categorie_model->get($edit);         
+            $data['results'] = (array)$row;
+            echo json_encode($data);
+        }else{
+            echo json_encode(array('message'=>'Post id required'));
+        }
+    }
+
 	public function get_list($num=20,$start=0)
     {
     	$search = '';
@@ -61,13 +84,12 @@ class Category extends MY_Controller{
         echo json_encode($data['logs']);
     }
 
-    // add Category
+    // add/edit Category
     public function add($edit=FALSE)
     {
         
         accessPermission('view dashboard');
         if($edit){
-            set_sessionData('post_id',$edit);
             $data['pk'] = $edit;
         }
         $this->load->library('form_validation');
@@ -82,9 +104,12 @@ class Category extends MY_Controller{
             
             $details = array(
                 'name'=> $this->input->post('name')
-            );     
-            $insert_id = $this->aauth_categorie_model->insert($details, FALSE);
-              
+            );  
+            if($edit){
+                $insert_id = $this->aauth_post_model->update($edit,$details);
+            }else{
+                $insert_id = $this->aauth_categorie_model->insert($details, FALSE);
+            }               
         }
 
         $this->template->title($data['title'])        

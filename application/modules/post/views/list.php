@@ -158,8 +158,8 @@
                                         Actions<span class="caret"></span></button>
 
                                     <ul class="dropdown-menu-xs dropdown-menu">
-                                        <li><a @click="goTo(item.id)" href="javascript:;"><i class="icon-pencil"></i> Edit</a></li>
-                                        <li><a @click="deleteInstance(item.id)" href="javascript:;"><i class=" icon-trash-alt"></i> Delete</a></li>
+                                        <li><a @click="goTo('<?=base_url();?>category/add/'+item.id,item.id)" href="javascript:;"><i class="icon-pencil"></i> Edit</a></li>
+                                        <li><a @click="deleteInstance('<?=base_url();?>post/destroy_instance/',item.id)" href="javascript:;"><i class=" icon-trash-alt"></i> Delete</a></li>
                                     </ul>
                                 </li>
                             </ul>
@@ -229,7 +229,7 @@
 
                 <div class="modal-footer text-center">
                     <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
-                    <button @click="deleteInstance(false)" type="button" class="btn btn-danger animated shake">Delete</button>
+                    <button @click="deleteInstance('<?=base_url();?>post/destroy_instance/',false)" type="button" class="btn btn-danger animated shake">Delete</button>
                 </div>
             </div>
         </div>
