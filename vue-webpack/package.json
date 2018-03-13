@@ -1,6 +1,6 @@
 {
-  "name": "vue-webpack",
-  "description": "A Vue.js project",
+  "name": "stock-webpack",
+  "description": "stock-webpack project",
   "version": "1.0.0",
   "author": "p8ul <pkinuthia10@gmail.com>",
   "license": "MIT",
@@ -11,9 +11,11 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
-    "v-media-query": "^1.0.3",
     "vue": "^2.5.11",
     "vue-axios": "^2.0.2",
+    "vue-quill-editor": "^3.0.5",
+    "vue-simple-markdown": "^1.0.6",
+    "vue2-dropzone": "^3.0.5",
     "vue-mq": "^0.1.1"
   },
   "browserslist": [

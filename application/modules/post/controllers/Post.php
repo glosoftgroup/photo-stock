@@ -20,7 +20,7 @@ class Post extends MY_Controller {
 	public function index($slug=FALSE)
 	{		
 		
-		if(!$this->aauth->is_loggedin()){ redirect('login'); exit; }
+		accessPermission('view dashboard');
 		unset($_SESSION['post_id']);
 		$data['title'] = ' Posts';		
 		$this->template->title($data['title'])        
@@ -190,7 +190,6 @@ class Post extends MY_Controller {
         	$data['title'] = 'Post Details';
         	$categories = json_decode($this->input->post('categories'
         		));
-        	print_r($categories);
         	$details = array(
             	'title'=> $this->input->post('title'),
             	'body'=>  $this->input->post('body')
