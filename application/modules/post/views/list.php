@@ -147,7 +147,7 @@
                           ${item.timestamp}
                         </td>
                         <td>
-                          ${item.file_size} ${item.file_size}
+                          ${item.file_size} KB
                         </td>
                         
 

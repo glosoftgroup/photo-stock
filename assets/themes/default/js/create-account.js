@@ -17,6 +17,7 @@ var parent = new Vue({
     methods:{
       realDownload(){
         document.getElementById("download_file").click();
+        document.getElementById("payments-tab-btn").click();        
         $('#modal_mini').modal('hide');
       },
     	validatePassword(){

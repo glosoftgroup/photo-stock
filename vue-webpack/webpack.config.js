@@ -2,11 +2,14 @@ var path = require('path')
 var webpack = require('webpack')
 
 module.exports = {
-  entry: './src/main.js',
+  entry: {
+    'frontend':'./frontend/src/main.js',
+    'backend': './backend/src/main.js'
+  },
   output: {
-    path: path.resolve(__dirname, './dist'),
-    publicPath: '/dist/',
-    filename: 'build.js'
+    path: path.resolve(__dirname, '../assets/themes/default/js/'),
+    publicPath: '/assets/themes/default/js/',
+    filename: '[name].bundle.js'
   },
   module: {
     rules: [

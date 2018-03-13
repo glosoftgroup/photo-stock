@@ -51,7 +51,7 @@
 				<li>
 				<a href="#information" aria-controls="information" role="tab" data-toggle="tab"><svg xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" viewBox="0 0 100 90" x="0px" y="0px"><title>03</title><path d="M50,46.82A18.75,18.75,0,1,0,31.25,28.08,18.77,18.77,0,0,0,50,46.82Zm0-31.49A12.75,12.75,0,1,1,37.25,28.08,12.76,12.76,0,0,1,50,15.33Z"/><path d="M80.51,80.78a30.51,30.51,0,0,0-61,0V90.6h61Zm-6,3.83h-49V80.78a24.51,24.51,0,0,1,49,0Z"/></svg>Personal Information</a></li>
 				<li>
-				<a href="#payments" aria-controls="payments" role="tab" data-toggle="tab">
+				<a id="payments-tab-btn" href="#payments" aria-controls="payments" role="tab" data-toggle="tab">
 				<svg xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" viewBox="0 0 100 125" x="0px" y="0px"><title>Artboard 14</title><path d="M85,68.83H77.88a2.5,2.5,0,0,0,0,5H85a2.5,2.5,0,0,0,0-5Z"/><path d="M85,79.06H77.88a2.5,2.5,0,0,0,0,5H85a2.5,2.5,0,0,0,0-5Z"/><path d="M87.8,41.21H70.58V25.38A10.58,10.58,0,0,0,60,14.81H12.31A10.58,10.58,0,0,0,1.74,25.38V62A10.58,10.58,0,0,0,12.31,72.6H29.42V88.54A10.47,10.47,0,0,0,39.87,99H87.8A10.47,10.47,0,0,0,98.26,88.54V51.67A10.47,10.47,0,0,0,87.8,41.21Zm0,5a5.47,5.47,0,0,1,5.46,5.46v2.53H70.58v-8ZM6.74,62V25.38a5.58,5.58,0,0,1,5.57-5.57H60a5.58,5.58,0,0,1,5.57,5.57V62A5.58,5.58,0,0,1,60,67.6H12.31A5.58,5.58,0,0,1,6.74,62ZM87.8,94H39.87a5.47,5.47,0,0,1-5.46-5.46V72.6H60A10.58,10.58,0,0,0,70.58,62V59.19H93.26V88.54A5.47,5.47,0,0,1,87.8,94Z"/><path d="M22.61,55.18h-7a2.5,2.5,0,1,0,0,5h7a2.5,2.5,0,1,0,0-5Z"/><path d="M39.67,55.18h-7a2.5,2.5,0,1,0,0,5h7a2.5,2.5,0,0,0,0-5Z"/><path d="M56.73,55.18h-7a2.5,2.5,0,0,0,0,5h7a2.5,2.5,0,0,0,0-5Z"/><path d="M22.58,28.7H20a6.91,6.91,0,0,0,0,13.82h2.58a6.91,6.91,0,1,0,0-13.82Zm0,8.82H20a1.91,1.91,0,0,1,0-3.82h2.58a1.91,1.91,0,1,1,0,3.82Z"/><path d="M85,1a2.5,2.5,0,0,0-2.5,2.5V5.1a8.5,8.5,0,0,0-6.69,8.33c0,2.46,1.12,6.85,8.63,8.57,4.75,1.09,4.75,3.05,4.75,3.7,0,2.5-2.17,3.63-4.19,3.63a4.19,4.19,0,0,1-3.87-2.57,2.5,2.5,0,0,0-4.61,1.93,9.16,9.16,0,0,0,6,5.28v1.65a2.5,2.5,0,0,0,5,0V34a8.5,8.5,0,0,0,6.69-8.33c0-2.46-1.12-6.85-8.63-8.57-4.74-1.08-4.74-3.05-4.74-3.7,0-2.5,2.17-3.63,4.19-3.63a4.18,4.18,0,0,1,3.87,2.57,2.5,2.5,0,0,0,4.61-1.93,9.16,9.16,0,0,0-6-5.28V3.5A2.5,2.5,0,0,0,85,1Z"/></svg>Payments
 				</a>
 				</li>
@@ -88,8 +88,7 @@
 					  <div class="payment-history" style="width: auto;">
 							<div>
 								<h6>
-								<img style="height: 15px;
-margin-right: 3px;" src="<?=img_url();?>camera_dummy.svg">
+								<img style="height: 15px;margin-right: 3px;" src="<?=img_url();?>camera_dummy.svg">
 								<?=$post['title'];?></h6>
 								<ul>
 									<li>Size: </li>
@@ -230,12 +229,24 @@ margin-right: 3px;" src="<?=img_url();?>camera_dummy.svg">
 					<div class="last">
 						<a href="#">Change</a>
 						<ul>
-							<li>Holly K Douglas</li>
-							<li>4124 Wines Lane</li>
-							<li>LITTLE ROCK</li>
-							<li>Arkansas</li>
-							<li>72214</li>
-							<li>USA</li>
+							<li>
+								<input type="text" class="form-control" placeholder="name" name="username">
+							</li>
+							<li>
+								<input type="text" class="form-control" placeholder="address" name="address">
+							</li>
+							<li>
+								<input  class="form-control" type="text" name="city">
+							</li>
+							<li>
+								<input class="form-control" type="text" name="state">
+							</li>
+							<li>
+								<input class="form-control" type="text" name="ZIP">
+							</li>
+							<li>
+								<input type="text" name="country">
+							</li>
 						</ul>
 						<span>PayPal</span>
 					</div>
