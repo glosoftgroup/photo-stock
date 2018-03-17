@@ -75,7 +75,7 @@ var parent = new Vue({
        loader:true,
        totalPages:1,
        visiblePages:4,
-       page_size:5,
+       page_size:20,
        search:'',
        start:0,
        status:'all',

@@ -193,7 +193,7 @@ export default {
     }
   },
   mounted:function(){
-    this.getCategories(); 
+    //this.getCategories(); 
     this.getPost();       
   } // end on mount
 }

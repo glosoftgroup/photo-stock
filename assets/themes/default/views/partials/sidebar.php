@@ -23,7 +23,7 @@
                         ><a href="#"><i class="icon-user-plus"></i> <span>My profile</span></a></li>
                        
                         <li>
-                        <a href="<?=base_url('user/profile/').$_SESSION['id'];?>"><i class="icon-cog5"></i> <span>Account settings</span></a>
+                        <a href="<?=base_url('users/profile/').$_SESSION['id'];?>"><i class="icon-cog5"></i> <span>Account settings</span></a>
                         </li>
                         <li>
                         <a href="<?=base_url('login/logout');?>"><i class="icon-switch2"></i> <span>Logout</span></a>
@@ -63,6 +63,8 @@
                             </ul>
                         </li> 
                         <!-- ./users -->
+
+                        <!-- posts -->
                         <li>
                             <a href="#"><i class="icon-droplet2"></i>
                              <span>Posts</span>
@@ -75,7 +77,24 @@
                                 <a href="<?=base_url('post/add');?>">Add Post</a>
                                 </li>
                             </ul>
-                        </li>                      
+                        </li>
+                        <!-- ./posts -->
+
+                        <!-- categories -->
+                        <li>
+                            <a href="#"><i class="icon-droplet2"></i>
+                             <span>Categories</span>
+                            </a>
+                            <ul>
+                                <li <?php echo preg_match('/^(category)/i', $this->uri->uri_string()) ? 'class="active open" ' : ''; ?>>
+                                <a href="<?=base_url('category');?>">List</a>
+                                </li>
+                                <li <?php echo preg_match('/^(add)/i', $this->uri->uri_string()) ? 'class="active open" ' : ''; ?>>
+                                <a href="<?=base_url('category/add');?>">Add Post</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- ./categories -->
 
                     </ul>
                 </div>

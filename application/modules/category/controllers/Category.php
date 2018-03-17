@@ -106,7 +106,7 @@ class Category extends MY_Controller{
                 'name'=> $this->input->post('name')
             );  
             if($edit){
-                $insert_id = $this->aauth_post_model->update($edit,$details);
+                $insert_id = $this->aauth_categorie_model->update($edit,$details);
             }else{
                 $insert_id = $this->aauth_categorie_model->insert($details, FALSE);
             }               
